@@ -1,0 +1,19 @@
+th {
+  cursor: pointer;
+  padding: 1rem 1rem;
+  width: 100px;
+  height: 50px;
+  border: 1px solid silver;
+}
+
+[data-sorted="true"] {
+  color: green;
+}
+
+[data-sorted="true"][data-order="asc"]::after {
+  content: "☝️";
+}
+
+[data-sorted="true"][data-order="desc"]::after {
+  content: "👇";
+}
