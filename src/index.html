@@ -4,17 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="js/main.js" defer></script>
+    <script type="module" src="js/main.js" defer></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/utilities.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
     <title>Document</title>
   </head>
   <body>
-    <table>
-      <thead>
-        <tr>
-          <!-- headers get injected here -->
-        </tr>
-      </thead>
-    </table>
+    <main class="container">
+      <section class="station-info">
+        <h1>Data från de senaste 4 månaderna</h1>
+        <h3>Stockholm</h3>
+        <p><strong>Ägare:</strong> SMHI</p>
+        <p><strong>id:</strong> 98210</p>
+        <p><strong>Höjd:</strong> 43.133</p>
+        <p><strong>Latitud:</strong> 59.3417</p>
+        <p><strong>Longitud:</strong> 18.0549</p>
+      </section>
+      <section class="pagination">
+        <!-- pagination stuff gets injected here -->
+      </section>
+      <table>
+        <thead>
+          <tr id="test-headers">
+            <!-- headers are injected here -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- data is injected here -->
+        </tbody>
+      </table>
+    </main>
   </body>
 </html>

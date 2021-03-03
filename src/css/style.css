@@ -1,19 +1,93 @@
-th {
-  cursor: pointer;
-  padding: 1rem 1rem;
-  width: 100px;
-  height: 50px;
-  border: 1px solid silver;
+:root {
+  --c-primary-light: #a8caf7;
+  --c-primary: #5a97e7;
+  --c-primary-dark: #596dc5;
 }
 
+th {
+  color: var(--c-primary);
+  cursor: pointer;
+  text-transform: capitalize;
+  min-width: 10rem;
+  padding: 1rem 2rem;
+  font-weight: 500;
+}
+td {
+  padding: 1rem 2rem;
+}
+
+/*----------  sortable headers  ----------*/
+
 [data-sorted="true"] {
-  color: green;
+  font-weight: 700;
+}
+[data-sorted="true"]::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 0.7rem;
+  margin-left: 5px;
 }
 
 [data-sorted="true"][data-order="asc"]::after {
-  content: "☝️";
+  content: "\f062"; /*arrow up*/
 }
 
 [data-sorted="true"][data-order="desc"]::after {
-  content: "👇";
+  content: "\f063"; /*arrow down*/
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--c-primary-dark);
+}
+.pagination__buttons {
+  font-size: 0;
+}
+.pagination p {
+  font-size: 0.9rem;
+}
+
+.btn-paginate {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0;
+}
+.btn-paginate:not(.disabled):hover {
+  background-color: var(--c-primary-dark);
+  border-color: var(--c-primary-dark);
+  color: white;
+}
+
+.btn {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--c-primary-light);
+  transition: 0.2s;
+}
+.btn.disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+.btn.disabled:focus {
+  outline: none;
+}
+.btn.active {
+  font-weight: 700;
+}
+
+.pill {
+  border-radius: 50px;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.pill-inactive {
+  background: rgb(255, 210, 210);
+  color: rgb(97, 25, 25);
+}
+.pill-active {
+  background: rgb(212, 255, 210);
+  color: rgb(15, 68, 31);
 }

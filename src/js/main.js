@@ -1,17 +1,28 @@
+import * as pagination from "./pagination.js";
 window.addEventListener("load", app);
 
 async function app() {
+  let paginatedData = [];
   const rawData = await fetchWeatherData(98210);
   const parsed = parse(rawData);
-  render(parsed.station, parsed.values);
   const props = Object.keys(parsed.values[0]);
   props.map((prop) => {
     renderTableHeader({
-      text: prop.toUpperCase(),
+      text: prop,
       isSortable: true,
       targetData: prop,
     });
   });
+  console.table(parsed.parameter);
+  console.table(parsed.period);
+  console.table(parsed.position);
+  console.table(parsed.station);
+  console.table(parsed.updated);
+  paginatedData = pagination.getPaginatedData(parsed.values);
+  renderTableBody(paginatedData);
+  pagination.setResultsLength(parsed.values.length);
+  pagination.render();
+
   // This handles all sorting
   document.addEventListener("click", ({ target }) => {
     if (target.dataset.sorted) {
@@ -31,15 +42,33 @@ async function app() {
           ? b[targetData] - a[targetData]
           : a[targetData] - b[targetData]
       );
-      render(parsed.station, sorted);
+      paginatedData = pagination.getPaginatedData(sorted);
+      renderTableBody(paginatedData);
+    } else if (target.closest(".btn-paginate")) {
+      if (target.closest("#nextpage")) {
+        pagination.nextPage();
+      } else if (target.closest("#previouspage")) {
+        pagination.previousPage();
+      } else {
+        pagination.setPage(+target.innerText);
+      }
+      paginatedData = pagination.getPaginatedData(parsed.values);
+      renderTableBody(paginatedData);
     }
+  });
+
+  const resultsSelect = document.querySelector("#results-select");
+  resultsSelect.addEventListener("change", () => {
+    // pagination.setTotalPages(resultsSelect.value);
+    // renderTableBody(paginatedData);
+    console.log(resultsSelect.value);
   });
 }
 
 async function fetchWeatherData(stationId) {
   // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.
   // 2 === temperatur medelvärde 1 gång/dygn
-  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/2/station/${stationId}/period/latest-months/data.json`;
+  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/27/station/${stationId}/period/latest-months/data.json`;
   const res = await fetch(url);
   const json = await res.json();
   return json;
@@ -80,14 +109,14 @@ function parse(data) {
   return output;
 }
 
-async function render(stationData, weatherData) {
+async function renderConsoleTable(stationData, weatherData) {
   console.clear();
   console.table(weatherData);
   console.table(stationData);
 }
 
 function renderTableHeader({ text, isSortable, targetData }) {
-  const tableHeaderRow = document.querySelector("thead tr");
+  const tableHeaderRow = document.querySelector("#test-headers");
   const th = document.createElement("th");
   if (isSortable) {
     th.setAttribute("data-sorted", "false");
@@ -97,3 +126,25 @@ function renderTableHeader({ text, isSortable, targetData }) {
   th.innerText = text;
   tableHeaderRow.appendChild(th);
 }
+
+function renderTableBody(data) {
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = "";
+  data.map((data) => {
+    const tr = document.createElement("tr");
+    for (const [key, value] of Object.entries(data)) {
+      const td = document.createElement("td");
+      td.innerText =
+        {
+          from: new Date(value).toLocaleString(),
+          to: new Date(value).toLocaleString(),
+          date: new Date(value).toLocaleString(),
+          value: `${value} °C`,
+        }[key] ?? value;
+      tr.appendChild(td);
+    }
+    tableBody.appendChild(tr);
+  });
+}
+
+function renderStationData(stationData) {}
