@@ -13,11 +13,11 @@ async function app() {
       targetData: prop,
     });
   });
-  console.table(parsed.parameter);
-  console.table(parsed.period);
-  console.table(parsed.position);
-  console.table(parsed.station);
-  console.table(parsed.updated);
+  // console.table(parsed.parameter);
+  // console.table(parsed.period);
+  // console.table(parsed.position);
+  // console.table(parsed.station);
+  // console.table(parsed.updated);
   paginatedData = pagination.getPaginatedData(parsed.values);
   renderTableBody(paginatedData);
   pagination.setResultsLength(parsed.values.length);
@@ -56,13 +56,21 @@ async function app() {
       renderTableBody(paginatedData);
     }
   });
-
-  const resultsSelect = document.querySelector("#results-select");
-  resultsSelect.addEventListener("change", () => {
-    // pagination.setTotalPages(resultsSelect.value);
-    // renderTableBody(paginatedData);
-    console.log(resultsSelect.value);
+  document.addEventListener("change", (e) => {
+    if (e.target.closest("#results-select")) {
+      const selectedValue = +e.target.value;
+      pagination.setResultsPerPage(selectedValue);
+      paginatedData = pagination.getPaginatedData(parsed.values);
+      renderTableBody(paginatedData);
+    }
   });
+
+  // const resultsSelect = document.querySelector("#results-select");
+  // resultsSelect.addEventListener("change", () => {
+  //   pagination.setResultsPerPage(resultsSelect.value);
+  //   paginatedData = pagination.getPaginatedData(parsed.values);
+  //   renderTableBody(paginatedData);
+  // });
 }
 
 async function fetchWeatherData(stationId) {

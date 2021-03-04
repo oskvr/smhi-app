@@ -1,8 +1,7 @@
-let currentPage = 1;
-let resultsPerPage = 25;
+let currentPage = +sessionStorage.getItem("currentPage") || 1;
+let resultsPerPage = +sessionStorage.getItem("resultsPerPage") || 25;
 let totalPages = 0;
-let resultCount = 0;
-
+let totalResults = 0;
 export function render() {
   const paginateSection = document.querySelector(".pagination");
   paginateSection.innerHTML = `
@@ -11,16 +10,19 @@ export function render() {
       Visar <strong>${
         resultsPerPage * currentPage - resultsPerPage
       }</strong> till <strong>${
-    currentPage === totalPages ? resultCount : resultsPerPage * currentPage
+    currentPage === totalPages ? totalResults : resultsPerPage * currentPage
   }</strong> av
-      <strong>${resultCount}</strong> resultat
+      <strong>${totalResults}</strong> resultat
       </p>     
       <label>
       Resultat per sida: 
       <select name="" id="results-select">
-      <option value="25">25</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
+      <option value="25" ${resultsPerPage === 25 && "selected"}>25</option>
+      <option value="50" ${resultsPerPage === 50 && "selected"}>50</option>
+      <option value="100" ${resultsPerPage === 100 && "selected"}>100</option>
+      <option value=${totalResults} ${
+    resultsPerPage === totalResults && "selected"
+  }>Visa alla</option>
     </select>
       </label>
       </div>
@@ -35,9 +37,9 @@ export function render() {
             let html = "";
             for (let i = 1; i <= totalPages; i++) {
               html += `
-              <button class="btn btn-paginate ${
-                i === currentPage && "active"
-              }">${i}</button>
+                <button class="btn btn-paginate ${
+                  i === currentPage && "active"
+                }">${i}</button>
               `;
             }
             return html;
@@ -53,33 +55,42 @@ export function render() {
     `;
 }
 
-export function setPage(newPage) {
-  currentPage = newPage;
+export function setPage(value) {
+  currentPage = value;
+  setCurrentPage(value);
   render();
 }
 export function previousPage() {
   if (currentPage === 1) return;
-  currentPage--;
+  setCurrentPage(currentPage - 1);
   render();
 }
 export function nextPage() {
   if (currentPage === totalPages) return;
-  currentPage++;
+  setCurrentPage(currentPage + 1);
   render();
 }
-export function setTotalPages(value) {
+export function setResultsPerPage(value) {
   resultsPerPage = value;
+  totalPages = Math.ceil(totalResults / resultsPerPage);
+  setCurrentPage(1);
+  sessionStorage.setItem("resultsPerPage", value);
   render();
 }
 
 export function setResultsLength(dataLength) {
-  resultCount = dataLength;
-  totalPages = Math.ceil(resultCount / resultsPerPage);
+  totalResults = dataLength;
+  totalPages = Math.ceil(totalResults / resultsPerPage);
 }
 
 export function getPaginatedData(array) {
-  const minIndex =
-    currentPage === 1 ? 0 : currentPage * resultsPerPage - resultsPerPage;
+  if (resultsPerPage === totalResults) return array;
+  const minIndex = currentPage * resultsPerPage - resultsPerPage;
   const maxIndex = minIndex + resultsPerPage;
   return array.filter((_, i) => i >= minIndex && i < maxIndex);
+}
+
+function setCurrentPage(value) {
+  currentPage = value;
+  sessionStorage.setItem("currentPage", value);
 }
