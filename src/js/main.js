@@ -1,4 +1,5 @@
 import * as pagination from "./pagination.js";
+import * as station from "./station.js";
 window.addEventListener("load", app);
 
 async function app() {
@@ -13,11 +14,9 @@ async function app() {
       targetData: prop,
     });
   });
-  // console.table(parsed.parameter);
-  // console.table(parsed.period);
-  // console.table(parsed.position);
-  // console.table(parsed.station);
-  // console.table(parsed.updated);
+  await station.cacheActiveStations();
+  await station.setStation("stockholm");
+  station.render();
   paginatedData = pagination.getPaginatedData(parsed.values);
   renderTableBody(paginatedData);
   pagination.setResultsLength(parsed.values.length);
@@ -50,27 +49,23 @@ async function app() {
       } else if (target.closest("#previouspage")) {
         pagination.previousPage();
       } else {
-        pagination.setPage(+target.innerText);
+        pagination.setCurrentPage(+target.innerText);
       }
       paginatedData = pagination.getPaginatedData(parsed.values);
       renderTableBody(paginatedData);
     }
   });
-  document.addEventListener("change", (e) => {
-    if (e.target.closest("#results-select")) {
-      const selectedValue = +e.target.value;
+  document.addEventListener("change", ({ target }) => {
+    if (target.closest("#results-select")) {
+      const selectedValue = +target.value;
       pagination.setResultsPerPage(selectedValue);
       paginatedData = pagination.getPaginatedData(parsed.values);
       renderTableBody(paginatedData);
     }
+    // else if (target.closest("#station-select")) {
+    //   console.log(target.value);
+    // }
   });
-
-  // const resultsSelect = document.querySelector("#results-select");
-  // resultsSelect.addEventListener("change", () => {
-  //   pagination.setResultsPerPage(resultsSelect.value);
-  //   paginatedData = pagination.getPaginatedData(parsed.values);
-  //   renderTableBody(paginatedData);
-  // });
 }
 
 async function fetchWeatherData(stationId) {
@@ -117,12 +112,6 @@ function parse(data) {
   return output;
 }
 
-async function renderConsoleTable(stationData, weatherData) {
-  console.clear();
-  console.table(weatherData);
-  console.table(stationData);
-}
-
 function renderTableHeader({ text, isSortable, targetData }) {
   const tableHeaderRow = document.querySelector("#test-headers");
   const th = document.createElement("th");
@@ -154,5 +143,3 @@ function renderTableBody(data) {
     tableBody.appendChild(tr);
   });
 }
-
-function renderStationData(stationData) {}

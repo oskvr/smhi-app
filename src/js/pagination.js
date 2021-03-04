@@ -21,7 +21,7 @@ export function render() {
       <option value="50" ${resultsPerPage === 50 && "selected"}>50</option>
       <option value="100" ${resultsPerPage === 100 && "selected"}>100</option>
       <option value=${totalResults} ${
-    resultsPerPage === totalResults && "selected"
+    resultsPerPage === totalResults ? "selected" : ""
   }>Visa alla</option>
     </select>
       </label>
@@ -55,9 +55,9 @@ export function render() {
     `;
 }
 
-export function setPage(value) {
+export function setCurrentPage(value) {
   currentPage = value;
-  setCurrentPage(value);
+  sessionStorage.setItem("currentPage", value);
   render();
 }
 export function previousPage() {
@@ -88,9 +88,4 @@ export function getPaginatedData(array) {
   const minIndex = currentPage * resultsPerPage - resultsPerPage;
   const maxIndex = minIndex + resultsPerPage;
   return array.filter((_, i) => i >= minIndex && i < maxIndex);
-}
-
-function setCurrentPage(value) {
-  currentPage = value;
-  sessionStorage.setItem("currentPage", value);
 }
