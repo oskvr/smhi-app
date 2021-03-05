@@ -1,10 +1,18 @@
-// import * as pagination from "./pagination.js";
-// import * as station from "./station.js";
+import * as pagination from "./pagination.js";
+import * as station from "./station.js";
+import * as weatherData from "./weatherData.js";
 
-// export let currentStation = {};
+export let currentStation = { id: 98210 };
+let cachedWeatherData = [];
+let cachedStationData = [];
+export let paginatedData = [];
+export function init() {}
 
-// export function setCurrentStation(location) {
-//     currentStation = cachedActiveStations.filter(
-//       (station) => station.name.toLowerCase() === location.toLowerCase()
-//     )[0];
-//   }
+export async function updateStation(location) {
+  currentStation = station.getStation(location);
+}
+
+export function newWeatherData() {}
+export function updateWeatherData() {
+  // paginatedData = pagination.
+}

@@ -1,5 +1,8 @@
-let currentPage = +sessionStorage.getItem("currentPage") || 1;
-let resultsPerPage = +sessionStorage.getItem("resultsPerPage") || 25;
+import * as weatherData from "./weatherData.js";
+
+export let paginatedData = [];
+let currentPage = +localStorage.getItem("currentPage") || 1;
+let resultsPerPage = +localStorage.getItem("resultsPerPage") || 25;
 let totalPages = 0;
 let totalResults = 0;
 export function render() {
@@ -55,9 +58,13 @@ export function render() {
     `;
 }
 
+export function setPaginatedData(rawData) {
+  paginatedData = getPaginatedData(rawData);
+}
+
 export function setCurrentPage(value) {
   currentPage = value;
-  sessionStorage.setItem("currentPage", value);
+  localStorage.setItem("currentPage", value);
   render();
 }
 export function previousPage() {
@@ -74,7 +81,7 @@ export function setResultsPerPage(value) {
   resultsPerPage = value;
   totalPages = Math.ceil(totalResults / resultsPerPage);
   setCurrentPage(1);
-  sessionStorage.setItem("resultsPerPage", value);
+  localStorage.setItem("resultsPerPage", value);
   render();
 }
 
@@ -89,3 +96,26 @@ export function getPaginatedData(array) {
   const maxIndex = minIndex + resultsPerPage;
   return array.filter((_, i) => i >= minIndex && i < maxIndex);
 }
+
+document.addEventListener("click", ({ target }) => {
+  if (target.closest(".btn-paginate")) {
+    if (target.closest("#nextpage")) {
+      nextPage();
+    } else if (target.closest("#previouspage")) {
+      previousPage();
+    } else {
+      setCurrentPage(+target.innerText);
+    }
+    setPaginatedData(weatherData.cachedWeatherData.value);
+    weatherData.render(paginatedData);
+  }
+});
+
+document.addEventListener("change", ({ target }) => {
+  if (target.closest("#results-select")) {
+    const selectedValue = +target.value;
+    setResultsPerPage(selectedValue);
+    setPaginatedData(weatherData.cachedWeatherData.value);
+    weatherData.render(paginatedData);
+  }
+});
