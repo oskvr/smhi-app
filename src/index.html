@@ -14,12 +14,30 @@
       integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
       crossorigin="anonymous"
     />
+    <script src="../node_modules/chart.js/dist/Chart.js"></script>
     <title>Document</title>
   </head>
   <body>
+    <button id="renderAll">Test: re-render everything</button>
     <main class="container">
       <section class="station"></section>
       <section class="station-info"></section>
+      <section class="date-filter">
+        <form id="dateFilterForm">
+          <label>
+            Från
+            <input type="date" id="startDate" />
+          </label>
+          <label>
+            Till
+            <input type="date" id="endDate" />
+          </label>
+          <button class="btn">Filtrera</button>
+        </form>
+        <div class="date-filter__info">
+          <!-- show dates when filtered -->
+        </div>
+      </section>
       <section class="pagination">
         <!-- pagination stuff gets injected here -->
       </section>

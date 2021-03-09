@@ -1,4 +1,3 @@
-// import { currentStation, updateStation } from "./store.js";
 import * as weatherData from "./weatherData.js";
 import * as pagination from "./pagination.js";
 const stationSection = document.querySelector(".station");

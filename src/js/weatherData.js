@@ -13,12 +13,23 @@ export async function init(station) {
 export function render() {
   renderTableBody(pagination.paginatedData);
   renderTableHeader(cachedWeatherData.value[0]);
+  console.log(cachedWeatherData.parameter.unit);
+}
+
+export function getWeatherData() {
+  const isFilteredByDates =
+    localStorage.getItem("isFilteredByDates") === "true";
+  if (isFilteredByDates) {
+    console.log("Returning filtered data");
+  } else {
+    console.log("Returning all data");
+  }
 }
 
 async function fetchWeatherData(stationId) {
   // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.
   // 2 === temperatur medelvärde 1 gång/dygn
-  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/5/station/${stationId}/period/latest-months/data.json`;
+  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/2/station/${stationId}/period/latest-months/data.json`;
 
   try {
     const res = await fetch(url);
@@ -40,15 +51,26 @@ function renderTableBody(data) {
         const td = document.createElement("td");
         td.innerText =
           {
-            from: new Date(value).toLocaleString(),
-            to: new Date(value).toLocaleString(),
-            date: new Date(value).toLocaleString(),
-            value: `${value} °C`,
+            from: new Date(value).toLocaleDateString(),
+            to: new Date(value).toLocaleDateString(),
+            date: new Date(value).toLocaleDateString(),
+            value:
+              value + " " + getUnitString(cachedWeatherData.parameter.unit),
           }[key] ?? value;
         tr.appendChild(td);
       }
       tableBody.appendChild(tr);
     });
+  }
+}
+function getUnitString(unit) {
+  switch (unit) {
+    case "millimetre":
+      return "mm";
+    case "degree celsius":
+      return "°C";
+    default:
+      return "";
   }
 }
 function renderTableHeader(object) {

@@ -1,5 +1,5 @@
 import * as weatherData from "./weatherData.js";
-
+import { renderAll } from "./render.js";
 export let paginatedData = [];
 let currentPage = +localStorage.getItem("currentPage") || 1;
 let resultsPerPage = +localStorage.getItem("resultsPerPage") || 25;
@@ -18,7 +18,7 @@ export function render() {
       <strong>${totalResults}</strong> resultat
       </p>     
       <label>
-      Resultat per sida: 
+      Max resultat per sida: 
       <select name="" id="results-select">
       <option value="25" ${resultsPerPage === 25 && "selected"}>25</option>
       <option value="50" ${resultsPerPage === 50 && "selected"}>50</option>
@@ -62,20 +62,17 @@ export function setPaginatedData(rawData) {
   paginatedData = getPaginatedData(rawData);
 }
 
-export function setCurrentPage(value) {
+function setCurrentPage(value) {
   currentPage = value;
   localStorage.setItem("currentPage", value);
-  render();
 }
-export function previousPage() {
+function previousPage() {
   if (currentPage === 1) return;
   setCurrentPage(currentPage - 1);
-  render();
 }
-export function nextPage() {
+function nextPage() {
   if (currentPage === totalPages) return;
   setCurrentPage(currentPage + 1);
-  render();
 }
 export function setResultsPerPage(value) {
   resultsPerPage = value;
@@ -107,7 +104,9 @@ document.addEventListener("click", ({ target }) => {
       setCurrentPage(+target.innerText);
     }
     setPaginatedData(weatherData.cachedWeatherData.value);
-    weatherData.render(paginatedData);
+    // render();
+    // weatherData.render(paginatedData);
+    renderAll();
   }
 });
 

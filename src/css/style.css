@@ -40,9 +40,7 @@ td {
 }
 
 .pagination {
-  position: sticky;
   background: white;
-  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
