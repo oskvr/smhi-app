@@ -1,3 +1,5 @@
+import {} from "../pagination.js";
+
 let weatherData = [];
 
 export async function fetchWeatherDataAsync(stationId) {
@@ -13,9 +15,15 @@ export function getWeatherData() {
 }
 
 export function getPaginatedWeatherData() {
-  // paginate the data and return it
+  const resultsPerPage = 25;
+  const totalResults = getWeatherData().length;
+  const currentPage = 1;
+  if (resultsPerPage === totalResults) return array;
+  const minIndex = currentPage * resultsPerPage - resultsPerPage;
+  const maxIndex = minIndex + resultsPerPage;
+  return getWeatherData().filter((_, i) => i >= minIndex && i < maxIndex);
 }
 
-export function updateWeatherData(value) {
+export function setWeatherData(value) {
   weatherData = value;
 }

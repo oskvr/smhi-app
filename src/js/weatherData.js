@@ -13,7 +13,7 @@ export async function init(station) {
 export function render() {
   renderTableBody(pagination.paginatedData);
   renderTableHeader(cachedWeatherData.value[0]);
-  console.log(cachedWeatherData.parameter.unit);
+  // console.log(cachedWeatherData.parameter.unit);
 }
 
 // export function getWeatherData() {

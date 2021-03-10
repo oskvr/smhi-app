@@ -1,7 +1,4 @@
-import {
-  fetchWeatherDataAsync,
-  updateWeatherData,
-} from "./weatherDataService.js";
+import { fetchWeatherDataAsync, setWeatherData } from "./weatherDataService.js";
 
 const stations = {
   all: [],
@@ -14,12 +11,13 @@ export async function init(stationId) {
   stations.active = stations.all.filter((station) => station.active);
   stations.current = getStationById(stationId);
   const weatherData = await fetchWeatherDataAsync(stationId);
-  updateWeatherData(weatherData);
+  setWeatherData(weatherData);
 }
 
-export function updateStation(stationId) {
+export function setStation(stationId) {
   stations.current = getStationById(stationId);
   // rerender station html
+  // also render pagination
 }
 export function getCurrentStation() {
   return stations.current;
@@ -27,8 +25,11 @@ export function getCurrentStation() {
 export function getActiveStations() {
   return stations.active;
 }
+export function getAllStations() {
+  return stations.all;
+}
 function getStationById(stationId) {
-  return stations.all.filter((station) => station.id === stationId);
+  return stations.all.filter((station) => station.id === stationId)[0];
 }
 async function fetchAllStationsAsync() {
   const url =
