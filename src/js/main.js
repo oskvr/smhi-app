@@ -1,5 +1,5 @@
 import * as stationSearch from "./stationSearch.js";
-import * as station from "./station.js";
+import * as station from "./stationInfo.js";
 import * as weatherData from "./weatherData.js";
 import * as pagination from "./pagination.js";
 import * as dateFilter from "./dateFilter.js";
@@ -14,11 +14,8 @@ async function app() {
   // await station.init("stockholm");
   //temp variable
   const tempCurrentStation = stationService.getCurrentStation();
-  // await weatherData.init(tempCurrentStation);
   pagination.setResultsLength(getWeatherData().length);
-  weatherData.render();
-  pagination.render();
-  station.render();
+  render.renderAll();
 }
 
 const dateFilterForm = document.querySelector("#dateFilterForm");

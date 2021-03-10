@@ -1,3 +1,4 @@
+import { renderAll } from "../render.js";
 import { fetchWeatherDataAsync, setWeatherData } from "./weatherDataService.js";
 
 const stations = {
@@ -15,6 +16,7 @@ export async function init(stationId) {
 }
 
 export async function setStation(value) {
+  console.log(typeof value);
   if (typeof value === "string") {
     stations.current = getStationByName(value);
   } else if (typeof value === "number") {
@@ -22,9 +24,8 @@ export async function setStation(value) {
   }
   fetchWeatherDataAsync(stations.current.id).then((data) => {
     setWeatherData(data);
+    renderAll();
   });
-  // rerender station html
-  // also render pagination
 }
 export function getCurrentStation() {
   return stations.current;

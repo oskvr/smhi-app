@@ -1,32 +1,11 @@
 import { on } from "./helpers.js";
-import * as station from "./station.js";
-const stations = station.cachedActiveStations;
-const container = document.querySelector(".station");
+import { getActiveStations, setStation } from "./lib/stationService.js";
+import * as weatherData from "./weatherData.js";
+import * as pagination from "./pagination.js";
+const results = document.querySelector(".results");
+const input = document.querySelector("#searchStationInput");
 let isOpen = false;
 let focusIndex = 0;
-
-function sortByMatch(data, term) {
-  return data.sort((a, b) => {
-    return a.name.toLowerCase().indexOf(term) <
-      b.name.toLowerCase().indexOf(term)
-      ? -1
-      : 1;
-  });
-}
-
-function showResults() {
-  const results = document.querySelector(".results");
-  results.classList.add("show");
-  isOpen = true;
-  focusIndex = 0;
-}
-
-function hideResults() {
-  const results = document.querySelector(".results");
-  results.classList.remove("show");
-  isOpen = false;
-  focusIndex = 0;
-}
 
 on("keydown", "#searchStationInput", (e) => {
   if (e.key === "ArrowDown") {
@@ -41,28 +20,30 @@ on("mouseover", ".results__item", (e) => {
 });
 on("keydown", ".results", (e) => {
   if (isOpen) {
-    const results = document.querySelectorAll(".results__item");
+    const resultItems = document.querySelectorAll(".results__item");
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
         focusIndex++;
-        if (focusIndex === results.length) {
+        if (focusIndex === resultItems.length) {
           focusIndex = 0;
         }
-        results[focusIndex].focus();
+        resultItems[focusIndex].focus();
         break;
       case "ArrowUp":
         e.preventDefault();
         focusIndex--;
         if (focusIndex === -1) {
-          focusIndex = results.length - 1;
+          focusIndex = resultItems.length - 1;
         }
-        results[focusIndex].focus();
+        resultItems[focusIndex].focus();
         break;
       case "Enter":
-        const selectedId = results[focusIndex].dataset.id;
+        const selectedId = +resultItems[focusIndex].dataset.id;
         if (selectedId) {
-          console.log(selectedId);
+          setStation(selectedId);
+          hideResults();
+          input.value = "";
         }
         break;
     }
@@ -70,7 +51,12 @@ on("keydown", ".results", (e) => {
 });
 
 on("click", ".results__item", (e) => {
-  console.log(e.target.dataset.id);
+  const selectedId = +e.target.dataset.id;
+  if (selectedId) {
+    setStation(selectedId);
+    input.value = "";
+    hideResults();
+  }
 });
 on("click", "!.results__item", () => {
   if (isOpen) {
@@ -78,14 +64,12 @@ on("click", "!.results__item", () => {
   }
 });
 on("click", "#searchStationInput", () => {
-  const input = document.querySelector("#searchStationInput");
   if (input.value) {
     showResults();
   }
 });
 
 on("input", "#searchStationInput", (e) => {
-  const input = document.querySelector("#searchStationInput");
   const results = document.querySelector(".results");
   if (!input.value) {
     hideResults();
@@ -93,7 +77,7 @@ on("input", "#searchStationInput", (e) => {
   }
   const filtered =
     input.value &&
-    stations.filter(({ name }) => {
+    getActiveStations().filter(({ name }) => {
       const inputToLower = input.value.toLowerCase();
       const nameToLower = name.toLowerCase();
       return nameToLower.includes(inputToLower);
@@ -103,30 +87,39 @@ on("input", "#searchStationInput", (e) => {
   if (sorted.length > 0) {
     showResults();
     results.innerHTML = `
-        ${sorted
-          .map((station, index) => {
-            return `
+          ${sorted
+            .map((station, index) => {
+              return `
               <li tabindex="0" data-id=${station.id} data-index=${index} class="results__item">
-                ${station.name}
+              ${station.name}
               </li>
+              `;
+            })
+            .join("")}
             `;
-          })
-          .join("")}
-      `;
   } else {
     results.innerHTML = `
-        <li class="results__item">Inga orter hittades</li>
-      `;
+            <li class="results__item">Inga orter hittades</li>
+            `;
   }
 });
+function sortByMatch(data, term) {
+  return data.sort((a, b) => {
+    return a.name.toLowerCase().indexOf(term) <
+      b.name.toLowerCase().indexOf(term)
+      ? -1
+      : 1;
+  });
+}
 
-export function render() {
-  container.innerHTML = `
-    <div class="search-station">
-        <input id="searchStationInput" type="text" placeholder="Sök och välj en station">
-        <ul class="results" role="navigation">
-        </ul>
-    </div>
-  
-    `;
+function showResults() {
+  results.classList.add("show");
+  isOpen = true;
+  focusIndex = 0;
+}
+
+function hideResults() {
+  results.classList.remove("show");
+  isOpen = false;
+  focusIndex = 0;
 }

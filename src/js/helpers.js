@@ -1,4 +1,4 @@
-/** Function that simplifies event delegation. Add "!" in target to negate the selector, i.e "!.mySelector" */
+/** Utility for simplifying event delegation. Add "!" in target to negate the selector, i.e "!.mySelector" */
 export function on(event, target, fn) {
   document.addEventListener(event, (e) => {
     if (target.substring(0, 1) === "!") {

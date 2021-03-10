@@ -4,6 +4,8 @@
   --c-primary-dark: #596dc5;
 }
 
+/*----------  TABLE  ----------*/
+
 th {
   color: var(--c-primary);
   cursor: pointer;
@@ -19,7 +21,7 @@ td {
   background: rgb(250, 250, 255);
 } */
 
-/*----------  sortable headers  ----------*/
+/*----------  SORTABLE TABLE HEADERS  ----------*/
 
 [data-sorted="true"] {
   font-weight: 700;
@@ -38,6 +40,8 @@ td {
 [data-sorted="true"][data-order="desc"]::after {
   content: "\f063"; /*arrow down*/
 }
+
+/*----------  PAGINATION  ----------*/
 
 .pagination {
   background: white;
@@ -64,6 +68,86 @@ td {
   color: white;
 }
 
+/*----------  STATION PICKER  ----------*/
+.search-station {
+  position: relative;
+}
+.search-results {
+  position: relative;
+}
+
+.results {
+  position: absolute;
+  top: 20px;
+  left: 5px;
+  background: white;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid silver;
+  width: 15rem;
+  max-height: 20rem;
+  overflow-y: scroll;
+  display: none;
+}
+
+.search-station ul {
+  padding: 0;
+}
+
+.results__item {
+  padding: 1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.results__item:hover::before,
+.results__item:focus::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: blue;
+  transition: inherit;
+}
+.results__item:hover,
+.results__item:focus {
+  outline: none;
+  background: silver;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.show {
+  display: block;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /*background: #f1f1f1;*/
+  background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/*----------  BUTTONS  ----------*/
+
 .btn {
   border-width: 1px;
   border-style: solid;
@@ -81,6 +165,8 @@ td {
   font-weight: 700;
 }
 
+/*----------  !UNUSED PILL  ----------*/
+
 .pill {
   border-radius: 50px;
   padding: 3px 10px;
@@ -95,6 +181,10 @@ td {
   background: rgb(212, 255, 210);
   color: rgb(15, 68, 31);
 }
+
+/*=============================================
+=            MEDIA QUERIES            =
+=============================================*/
 
 /* Mobile */
 @media only screen and (max-width: 320px) {

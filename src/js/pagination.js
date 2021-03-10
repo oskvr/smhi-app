@@ -1,3 +1,4 @@
+import { on } from "./helpers.js";
 import * as weatherData from "./weatherData.js";
 export let paginatedData = [];
 export let currentPage = +localStorage.getItem("currentPage") || 1;
@@ -39,7 +40,7 @@ export function render() {
             let html = "";
             for (let i = 1; i <= totalPages; i++) {
               html += `
-                <button class="btn btn-paginate ${
+                <button class="btn btn-paginate btn-paginate__number ${
                   i === currentPage && "active"
                 }">${i}</button>
               `;
@@ -88,17 +89,23 @@ function getTotalPages() {
   return Math.ceil(totalResults / resultsPerPage);
 }
 
-document.addEventListener("click", ({ target }) => {
-  if (target.closest(".btn-paginate")) {
-    if (target.closest("#nextpage")) {
-      nextPage();
-    } else if (target.closest("#previouspage")) {
-      previousPage();
-    } else {
-      setCurrentPage(+target.innerText);
-    }
-  }
+on("click", "#nextpage", nextPage);
+on("click", "#previouspage", previousPage);
+on("click", ".btn-paginate__number", ({ target }) => {
+  setCurrentPage(+target.innerText);
 });
+
+// document.addEventListener("click", ({ target }) => {
+//   if (target.closest(".btn-paginate")) {
+//     if (target.closest("#nextpage")) {
+//       nextPage();
+//     } else if (target.closest("#previouspage")) {
+//       previousPage();
+//     } else {
+//       setCurrentPage(+target.innerText);
+//     }
+//   }
+// });
 
 document.addEventListener("change", ({ target }) => {
   if (target.closest("#results-select")) {

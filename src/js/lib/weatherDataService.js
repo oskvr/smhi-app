@@ -77,37 +77,37 @@ export function getPaginatedWeatherData() {
   return getWeatherData().filter((_, i) => i >= minIndex && i < maxIndex);
 }
 
-function parse(data) {
+export function get() {
   const output = {
     parameter: {
-      key: data.parameter.key,
-      name: data.parameter.name,
-      summary: data.parameter.summary,
-      unit: data.parameter.unit,
+      key: weatherData.parameter.key,
+      name: weatherData.parameter.name,
+      summary: weatherData.parameter.summary,
+      unit: weatherData.parameter.unit,
     },
     period: {
-      key: data.period.key,
-      from: data.period.from,
-      to: data.period.to,
-      summary: data.period.summary,
-      sampling: data.period.sampling,
+      key: weatherData.period.key,
+      from: weatherData.period.from,
+      to: weatherData.period.to,
+      summary: weatherData.period.summary,
+      sampling: weatherData.period.sampling,
     },
     position: {
-      from: data.position[0].from,
-      to: data.position[0].to,
-      height: data.position[0].height,
-      latitude: data.position[0].latitude,
-      longitude: data.position[0].longitude,
+      from: weatherData.position[0].from,
+      to: weatherData.position[0].to,
+      height: weatherData.position[0].height,
+      latitude: weatherData.position[0].latitude,
+      longitude: weatherData.position[0].longitude,
     },
     station: {
-      height: data.station.height,
-      key: data.station.key,
-      name: data.station.name,
-      owner: data.station.owner,
-      ownerCategory: data.station.ownerCategory,
+      height: weatherData.station.height,
+      key: weatherData.station.key,
+      name: weatherData.station.name,
+      owner: weatherData.station.owner,
+      ownerCategory: weatherData.station.ownerCategory,
     },
-    updated: data.updated,
-    values: data.value,
+    updated: weatherData.updated,
+    values: weatherData.value,
   };
   return output;
 }
