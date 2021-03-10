@@ -6,21 +6,7 @@ import {
   setStation,
 } from "./lib/stationService.js";
 const stationSection = document.querySelector(".station");
-// export let cachedActiveStations = [];
-// let cachedAllStations = [];
-// export let currentStation = {};
 
-// export async function init(location) {
-//   cachedAllStations = getAllStations();
-//   cachedActiveStations = getActiveStations();
-//   currentStation = getCurrentStation();
-// }
-
-// export function getStation(stationName) {
-//   return cachedActiveStations.filter(
-//     (station) => station.name.toLowerCase() === stationName.toLowerCase()
-//   )[0];
-// }
 export function render() {
   stationSection.innerHTML = `
   <select id="stationSelect">

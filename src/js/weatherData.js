@@ -1,44 +1,31 @@
 import {
-  fetchWeatherDataAsync,
   getPaginatedWeatherData,
-  getUnit,
-  getWeatherData,
-  setWeatherData,
+  getUnitString,
+  getWeatherDataProps,
   sortWeatherData,
 } from "./lib/weatherDataService.js";
-import * as pagination from "./pagination.js";
+import { setCurrentPage } from "./pagination.js";
 
 const tableBody = document.querySelector("tbody");
 const tableHead = document.querySelector("#test-headers");
+const latestSort = {
+  prop: "",
+  order: "",
+};
 export let cachedWeatherData = [];
-// export async function init(station) {
-//   cachedWeatherData = await fetchWeatherDataAsync(station.id);
-//   pagination.setPaginatedData(cachedWeatherData.value);
-//   pagination.setResultsLength(cachedWeatherData.value.length);
-// }
 
 export function render() {
-  renderTableBody(getPaginatedWeatherData());
-  renderTableHeader(getWeatherData()[0]);
-  // console.log(cachedWeatherData.parameter.unit);
+  renderTableBody();
+  renderTableHeader();
 }
 
-// export function getWeatherData() {
-//   const isFilteredByDates =
-//     localStorage.getItem("isFilteredByDates") === "true";
-//   if (isFilteredByDates) {
-//     console.log("Returning filtered data");
-//   } else {
-//     console.log("Returning all data");
-//   }
-// }
-
-function renderTableBody(data) {
+function renderTableBody() {
+  const weatherData = getPaginatedWeatherData();
   tableBody.innerHTML = "";
-  if (!data) {
+  if (!weatherData) {
     tableBody.innerHTML = "Ingen data kunde hittas för vald station";
   } else {
-    data.map((data) => {
+    weatherData.map((data) => {
       const tr = document.createElement("tr");
       for (const [key, value] of Object.entries(data)) {
         const td = document.createElement("td");
@@ -47,7 +34,7 @@ function renderTableBody(data) {
             from: new Date(value).toLocaleDateString(),
             to: new Date(value).toLocaleDateString(),
             date: new Date(value).toLocaleDateString(),
-            value: value + " " + getUnit(),
+            value: value + " " + getUnitString(),
           }[key] ?? value;
         tr.appendChild(td);
       }
@@ -55,24 +42,21 @@ function renderTableBody(data) {
     });
   }
 }
-// function getUnitString(unit) {
-//   switch (unit) {
-//     case "millimetre":
-//       return "mm";
-//     case "degree celsius":
-//       return "°C";
-//     default:
-//       return "";
-//   }
-// }
-function renderTableHeader(object) {
-  const props = Object.keys(object);
+
+function renderTableHeader() {
+  const props = getWeatherDataProps();
   tableHead.innerHTML = "";
   props.map((prop) => {
     const th = document.createElement("th");
-    th.setAttribute("data-sorted", "false");
-    th.setAttribute("data-order", "asc");
-    th.setAttribute("data-targetdata", prop);
+    if (prop === latestSort.prop) {
+      th.setAttribute("data-sorted", "true");
+      th.setAttribute("data-order", latestSort.order);
+      th.setAttribute("data-targetdata", prop);
+    } else {
+      th.setAttribute("data-sorted", "false");
+      th.setAttribute("data-order", "asc");
+      th.setAttribute("data-targetdata", prop);
+    }
     th.innerText = prop;
     tableHead.appendChild(th);
   });
@@ -91,54 +75,9 @@ document.addEventListener("click", ({ target }) => {
     target.dataset.sorted = "true";
     target.dataset.order = sortOrder === "desc" ? "asc" : "desc";
     const targetData = target.dataset.targetdata;
-    // const sorted = getWeatherData().sort((a, b) =>
-    //   sortOrder === "asc"
-    //     ? b[targetData] - a[targetData]
-    //     : a[targetData] - b[targetData]
-    // );
-    // console.log(target.dataset.sorted);
-    // pagination.setPaginatedData(sorted);
-    // setWeatherData(sorted);
-    sortWeatherData((a, b) =>
-      sortOrder === "asc"
-        ? b[targetData] - a[targetData]
-        : a[targetData] - b[targetData]
-    );
-    renderTableBody(getPaginatedWeatherData());
+    latestSort.prop = targetData;
+    latestSort.order = target.dataset.order;
+    sortWeatherData(targetData, sortOrder);
+    setCurrentPage(1);
   }
 });
-
-// function parse(data) {
-//   const output = {
-//     parameter: {
-//       key: data.parameter.key,
-//       name: data.parameter.name,
-//       summary: data.parameter.summary,
-//       unit: data.parameter.unit,
-//     },
-//     period: {
-//       key: data.period.key,
-//       from: data.period.from,
-//       to: data.period.to,
-//       summary: data.period.summary,
-//       sampling: data.period.sampling,
-//     },
-//     position: {
-//       from: data.position[0].from,
-//       to: data.position[0].to,
-//       height: data.position[0].height,
-//       latitude: data.position[0].latitude,
-//       longitude: data.position[0].longitude,
-//     },
-//     station: {
-//       height: data.station.height,
-//       key: data.station.key,
-//       name: data.station.name,
-//       owner: data.station.owner,
-//       ownerCategory: data.station.ownerCategory,
-//     },
-//     updated: data.updated,
-//     value: data.value,
-//   };
-//   return output;
-// }

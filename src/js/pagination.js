@@ -1,5 +1,4 @@
 import * as weatherData from "./weatherData.js";
-import { renderAll } from "./render.js";
 export let paginatedData = [];
 export let currentPage = +localStorage.getItem("currentPage") || 1;
 export let resultsPerPage = +localStorage.getItem("resultsPerPage") || 25;
@@ -58,10 +57,9 @@ export function render() {
     `;
 }
 
-function setCurrentPage(value) {
+export function setCurrentPage(value) {
   currentPage = value;
   localStorage.setItem("currentPage", value);
-  // setPaginatedData(weatherData.cachedWeatherData.value);
   render();
   weatherData.render();
 }
@@ -75,7 +73,7 @@ function nextPage() {
 }
 export function setResultsPerPage(value) {
   resultsPerPage = value;
-  totalPages = Math.ceil(totalResults / resultsPerPage);
+  totalPages = getTotalPages();
   setCurrentPage(1);
   localStorage.setItem("resultsPerPage", value);
   render();
@@ -83,18 +81,12 @@ export function setResultsPerPage(value) {
 
 export function setResultsLength(dataLength) {
   totalResults = dataLength;
-  totalPages = Math.ceil(totalResults / resultsPerPage);
+  totalPages = getTotalPages();
 }
 
-// export function setPaginatedData(rawData) {
-//   paginatedData = getPaginatedData(rawData);
-// }
-// export function getPaginatedData(array) {
-//   if (resultsPerPage === totalResults) return array;
-//   const minIndex = currentPage * resultsPerPage - resultsPerPage;
-//   const maxIndex = minIndex + resultsPerPage;
-//   return array.filter((_, i) => i >= minIndex && i < maxIndex);
-// }
+function getTotalPages() {
+  return Math.ceil(totalResults / resultsPerPage);
+}
 
 document.addEventListener("click", ({ target }) => {
   if (target.closest(".btn-paginate")) {
@@ -111,7 +103,5 @@ document.addEventListener("click", ({ target }) => {
 document.addEventListener("change", ({ target }) => {
   if (target.closest("#results-select")) {
     setResultsPerPage(+target.value);
-    // setPaginatedData(weatherData.cachedWeatherData.value);
-    // weatherData.render(paginatedData);
   }
 });
