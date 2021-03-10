@@ -65,6 +65,9 @@ export function setPaginatedData(rawData) {
 function setCurrentPage(value) {
   currentPage = value;
   localStorage.setItem("currentPage", value);
+  setPaginatedData(weatherData.cachedWeatherData.value);
+  render();
+  weatherData.render();
 }
 function previousPage() {
   if (currentPage === 1) return;
@@ -103,10 +106,6 @@ document.addEventListener("click", ({ target }) => {
     } else {
       setCurrentPage(+target.innerText);
     }
-    setPaginatedData(weatherData.cachedWeatherData.value);
-    // render();
-    // weatherData.render(paginatedData);
-    renderAll();
   }
 });
 

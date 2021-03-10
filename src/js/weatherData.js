@@ -1,11 +1,11 @@
+import { fetchWeatherDataAsync } from "./lib/weatherDataService.js";
 import * as pagination from "./pagination.js";
 
 const tableBody = document.querySelector("tbody");
 const tableHead = document.querySelector("#test-headers");
 export let cachedWeatherData = [];
-
 export async function init(station) {
-  cachedWeatherData = await fetchWeatherData(station.id);
+  cachedWeatherData = await fetchWeatherDataAsync(station.id);
   pagination.setPaginatedData(cachedWeatherData.value);
   pagination.setResultsLength(cachedWeatherData.value.length);
 }
@@ -16,29 +16,15 @@ export function render() {
   console.log(cachedWeatherData.parameter.unit);
 }
 
-export function getWeatherData() {
-  const isFilteredByDates =
-    localStorage.getItem("isFilteredByDates") === "true";
-  if (isFilteredByDates) {
-    console.log("Returning filtered data");
-  } else {
-    console.log("Returning all data");
-  }
-}
-
-async function fetchWeatherData(stationId) {
-  // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.
-  // 2 === temperatur medelvärde 1 gång/dygn
-  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/2/station/${stationId}/period/latest-months/data.json`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    renderTableBody(null);
-  }
-}
+// export function getWeatherData() {
+//   const isFilteredByDates =
+//     localStorage.getItem("isFilteredByDates") === "true";
+//   if (isFilteredByDates) {
+//     console.log("Returning filtered data");
+//   } else {
+//     console.log("Returning all data");
+//   }
+// }
 
 function renderTableBody(data) {
   tableBody.innerHTML = "";

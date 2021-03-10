@@ -3,7 +3,7 @@ import * as pagination from "./pagination.js";
 const infoContainer = document.querySelector(".date-filter__info");
 const startDate = document.querySelector("#startDate");
 const endDate = document.querySelector("#endDate");
-const isFiltered = false;
+let isFiltered = false;
 export function filterDates() {
   if (!startDate.value || !endDate.value) return;
   isFiltered = true;
@@ -22,7 +22,7 @@ export function filterDates() {
   pagination.render();
   render();
   localStorage.setItem("isFilteredByDates", "true");
-  weatherData.getWeatherData();
+  // weatherData.getWeatherData();
 }
 
 export function render() {
@@ -50,6 +50,6 @@ document.addEventListener("click", ({ target }) => {
     pagination.setResultsLength(weatherData.cachedWeatherData.value.length);
     pagination.render();
     localStorage.setItem("isFilteredByDates", "false");
-    weatherData.getWeatherData();
+    // weatherData.getWeatherData();
   }
 });
