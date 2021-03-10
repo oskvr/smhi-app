@@ -1,10 +1,10 @@
 import * as weatherData from "./weatherData.js";
 import { renderAll } from "./render.js";
 export let paginatedData = [];
-let currentPage = +localStorage.getItem("currentPage") || 1;
-let resultsPerPage = +localStorage.getItem("resultsPerPage") || 25;
-let totalPages = 0;
-let totalResults = 0;
+export let currentPage = +localStorage.getItem("currentPage") || 1;
+export let resultsPerPage = +localStorage.getItem("resultsPerPage") || 25;
+export let totalPages = 0;
+export let totalResults = 0;
 export function render() {
   const paginateSection = document.querySelector(".pagination");
   paginateSection.innerHTML = `
@@ -58,14 +58,10 @@ export function render() {
     `;
 }
 
-export function setPaginatedData(rawData) {
-  paginatedData = getPaginatedData(rawData);
-}
-
 function setCurrentPage(value) {
   currentPage = value;
   localStorage.setItem("currentPage", value);
-  setPaginatedData(weatherData.cachedWeatherData.value);
+  // setPaginatedData(weatherData.cachedWeatherData.value);
   render();
   weatherData.render();
 }
@@ -90,12 +86,15 @@ export function setResultsLength(dataLength) {
   totalPages = Math.ceil(totalResults / resultsPerPage);
 }
 
-export function getPaginatedData(array) {
-  if (resultsPerPage === totalResults) return array;
-  const minIndex = currentPage * resultsPerPage - resultsPerPage;
-  const maxIndex = minIndex + resultsPerPage;
-  return array.filter((_, i) => i >= minIndex && i < maxIndex);
-}
+// export function setPaginatedData(rawData) {
+//   paginatedData = getPaginatedData(rawData);
+// }
+// export function getPaginatedData(array) {
+//   if (resultsPerPage === totalResults) return array;
+//   const minIndex = currentPage * resultsPerPage - resultsPerPage;
+//   const maxIndex = minIndex + resultsPerPage;
+//   return array.filter((_, i) => i >= minIndex && i < maxIndex);
+// }
 
 document.addEventListener("click", ({ target }) => {
   if (target.closest(".btn-paginate")) {
@@ -111,9 +110,8 @@ document.addEventListener("click", ({ target }) => {
 
 document.addEventListener("change", ({ target }) => {
   if (target.closest("#results-select")) {
-    const selectedValue = +target.value;
-    setResultsPerPage(selectedValue);
-    setPaginatedData(weatherData.cachedWeatherData.value);
-    weatherData.render(paginatedData);
+    setResultsPerPage(+target.value);
+    // setPaginatedData(weatherData.cachedWeatherData.value);
+    // weatherData.render(paginatedData);
   }
 });

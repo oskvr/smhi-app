@@ -14,8 +14,15 @@ export async function init(stationId) {
   setWeatherData(weatherData);
 }
 
-export function setStation(stationId) {
-  stations.current = getStationById(stationId);
+export async function setStation(value) {
+  if (typeof value === "string") {
+    stations.current = getStationByName(value);
+  } else if (typeof value === "number") {
+    stations.current = getStationById(value);
+  }
+  fetchWeatherDataAsync(stations.current.id).then((data) => {
+    setWeatherData(data);
+  });
   // rerender station html
   // also render pagination
 }
@@ -30,6 +37,9 @@ export function getAllStations() {
 }
 function getStationById(stationId) {
   return stations.all.filter((station) => station.id === stationId)[0];
+}
+function getStationByName(stationName) {
+  return stations.all.filter((station) => station.name === stationName)[0];
 }
 async function fetchAllStationsAsync() {
   const url =

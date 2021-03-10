@@ -1,18 +1,25 @@
-import { fetchWeatherDataAsync } from "./lib/weatherDataService.js";
+import {
+  fetchWeatherDataAsync,
+  getPaginatedWeatherData,
+  getUnit,
+  getWeatherData,
+  setWeatherData,
+  sortWeatherData,
+} from "./lib/weatherDataService.js";
 import * as pagination from "./pagination.js";
 
 const tableBody = document.querySelector("tbody");
 const tableHead = document.querySelector("#test-headers");
 export let cachedWeatherData = [];
-export async function init(station) {
-  cachedWeatherData = await fetchWeatherDataAsync(station.id);
-  pagination.setPaginatedData(cachedWeatherData.value);
-  pagination.setResultsLength(cachedWeatherData.value.length);
-}
+// export async function init(station) {
+//   cachedWeatherData = await fetchWeatherDataAsync(station.id);
+//   pagination.setPaginatedData(cachedWeatherData.value);
+//   pagination.setResultsLength(cachedWeatherData.value.length);
+// }
 
 export function render() {
-  renderTableBody(pagination.paginatedData);
-  renderTableHeader(cachedWeatherData.value[0]);
+  renderTableBody(getPaginatedWeatherData());
+  renderTableHeader(getWeatherData()[0]);
   // console.log(cachedWeatherData.parameter.unit);
 }
 
@@ -40,8 +47,7 @@ function renderTableBody(data) {
             from: new Date(value).toLocaleDateString(),
             to: new Date(value).toLocaleDateString(),
             date: new Date(value).toLocaleDateString(),
-            value:
-              value + " " + getUnitString(cachedWeatherData.parameter.unit),
+            value: value + " " + getUnit(),
           }[key] ?? value;
         tr.appendChild(td);
       }
@@ -49,16 +55,16 @@ function renderTableBody(data) {
     });
   }
 }
-function getUnitString(unit) {
-  switch (unit) {
-    case "millimetre":
-      return "mm";
-    case "degree celsius":
-      return "°C";
-    default:
-      return "";
-  }
-}
+// function getUnitString(unit) {
+//   switch (unit) {
+//     case "millimetre":
+//       return "mm";
+//     case "degree celsius":
+//       return "°C";
+//     default:
+//       return "";
+//   }
+// }
 function renderTableHeader(object) {
   const props = Object.keys(object);
   tableHead.innerHTML = "";
@@ -85,14 +91,20 @@ document.addEventListener("click", ({ target }) => {
     target.dataset.sorted = "true";
     target.dataset.order = sortOrder === "desc" ? "asc" : "desc";
     const targetData = target.dataset.targetdata;
-    const sorted = cachedWeatherData.value.sort((a, b) =>
+    // const sorted = getWeatherData().sort((a, b) =>
+    //   sortOrder === "asc"
+    //     ? b[targetData] - a[targetData]
+    //     : a[targetData] - b[targetData]
+    // );
+    // console.log(target.dataset.sorted);
+    // pagination.setPaginatedData(sorted);
+    // setWeatherData(sorted);
+    sortWeatherData((a, b) =>
       sortOrder === "asc"
         ? b[targetData] - a[targetData]
         : a[targetData] - b[targetData]
     );
-    console.log(target.dataset.sorted);
-    pagination.setPaginatedData(sorted);
-    renderTableBody(pagination.paginatedData);
+    renderTableBody(getPaginatedWeatherData());
   }
 });
 

@@ -1,6 +1,10 @@
 import * as weatherData from "./weatherData.js";
 import * as pagination from "./pagination.js";
-import { getActiveStations, getCurrentStation } from "./lib/stationService.js";
+import {
+  getActiveStations,
+  getCurrentStation,
+  setStation,
+} from "./lib/stationService.js";
 const stationSection = document.querySelector(".station");
 // export let cachedActiveStations = [];
 // let cachedAllStations = [];
@@ -40,9 +44,8 @@ export function render() {
 document.addEventListener("click", ({ target }) => {
   const selectedStation = document.querySelector("#stationSelect");
   if (target.closest("#changeStation")) {
-    console.log(selectedStation.value);
-    getCurrentStation() = getStation(selectedStation.value);
-    weatherData.init(getCurrentStation());
+    setStation(selectedStation.value);
+    // weatherData.init(getCurrentStation());
     weatherData.render();
     pagination.render();
     render();
