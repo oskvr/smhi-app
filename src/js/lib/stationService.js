@@ -1,5 +1,9 @@
 import { renderAll } from "../render.js";
-import { fetchWeatherDataAsync, setWeatherData } from "./weatherDataService.js";
+import {
+  fetchWeatherDataAsync,
+  getWeatherData,
+  setWeatherData,
+} from "./weatherDataService.js";
 
 const stations = {
   all: [],
@@ -25,6 +29,7 @@ export async function setStation(value) {
   fetchWeatherDataAsync(stations.current.id).then((data) => {
     setWeatherData(data);
     renderAll();
+    console.log(getWeatherData());
   });
 }
 export function getCurrentStation() {

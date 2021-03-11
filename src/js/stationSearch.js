@@ -1,7 +1,5 @@
 import { on } from "./helpers.js";
 import { getActiveStations, setStation } from "./lib/stationService.js";
-import * as weatherData from "./weatherData.js";
-import * as pagination from "./pagination.js";
 const results = document.querySelector(".results");
 const input = document.querySelector("#searchStationInput");
 let isOpen = false;

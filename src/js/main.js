@@ -13,7 +13,6 @@ async function app() {
   await stationService.init(98210);
   // await station.init("stockholm");
   //temp variable
-  const tempCurrentStation = stationService.getCurrentStation();
   pagination.setResultsLength(getWeatherData().length);
   render.renderAll();
 }

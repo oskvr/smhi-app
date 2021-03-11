@@ -94,21 +94,6 @@ on("click", "#previouspage", previousPage);
 on("click", ".btn-paginate__number", ({ target }) => {
   setCurrentPage(+target.innerText);
 });
-
-// document.addEventListener("click", ({ target }) => {
-//   if (target.closest(".btn-paginate")) {
-//     if (target.closest("#nextpage")) {
-//       nextPage();
-//     } else if (target.closest("#previouspage")) {
-//       previousPage();
-//     } else {
-//       setCurrentPage(+target.innerText);
-//     }
-//   }
-// });
-
-document.addEventListener("change", ({ target }) => {
-  if (target.closest("#results-select")) {
-    setResultsPerPage(+target.value);
-  }
+on("change", "#results-select", ({ target }) => {
+  setResultsPerPage(+target.value);
 });

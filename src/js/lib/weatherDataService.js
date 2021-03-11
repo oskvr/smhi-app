@@ -1,11 +1,16 @@
-import { resultsPerPage, currentPage, totalResults } from "../pagination.js";
+import {
+  resultsPerPage,
+  currentPage,
+  totalResults,
+  setResultsLength,
+} from "../pagination.js";
 import { isFilteredByDate } from "../dateFilter.js";
 let weatherData = [];
 let filteredWeatherData = [];
 export async function fetchWeatherDataAsync(stationId) {
   // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.
   // 2 === temperatur medelvärde 1 gång/dygn
-  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/27/station/${stationId}/period/latest-months/data.json`;
+  const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/2/station/${stationId}/period/latest-months/data.json`;
   const res = await fetch(url);
   const data = await res.json();
   return data;
@@ -20,7 +25,7 @@ export function getWeatherData() {
 }
 export function setWeatherData(value) {
   weatherData = value;
-  // render table body here
+  setResultsLength(weatherData.value.length);
 }
 export function getWeatherDataProps() {
   return Object.keys(weatherData.value[0]);
@@ -28,21 +33,34 @@ export function getWeatherDataProps() {
 
 export function filterByDates(start, end) {
   const filteredData = weatherData.value.filter((data) => {
-    const convertedString = new Date(data.date).toDateString();
+    const convertedString = new Date(
+      data.date ?? data.from ?? data.ref
+    ).toDateString();
     const converted = new Date(convertedString).getTime();
     return converted >= start && converted <= end;
   });
   console.log(filteredData);
+  console.log(filteredData);
   filteredWeatherData = filteredData;
 }
+
 export function sortWeatherData(targetData, sortOrder) {
+  function sortAscString(a, b) {
+    return a > b ? 1 : a < b ? -1 : 0;
+  }
+  function sortDescString(a, b) {
+    return b > a ? 1 : b < a ? -1 : 0;
+  }
+
   const sorted = getWeatherData().sort((a, b) => {
-    if (typeof a[targetData] === "string") {
+    if (typeof a[targetData] === "string" && isNaN(a[targetData])) {
       // Sort by string
       if (sortOrder === "asc") {
-        return a[targetData] > b[targetData] ? 1 : -1;
+        // return a[targetData] > b[targetData] ? 1 : -1;
+        return sortAscString(a[targetData], b[targetData]);
       } else {
-        return b[targetData] > a[targetData] ? 1 : -1;
+        return sortDescString(a[targetData], b[targetData]);
+        // return b[targetData] > a[targetData] ? 1 : -1;
       }
     } else {
       // Sort by number

@@ -22,15 +22,14 @@ export function filterDates() {
 
 export function render() {
   if (isFilteredByDate) {
-    const div = document.createElement("div");
+    infoContainer.innerHTML = `
+        <span>Visar data mellan perioden ${startDate.value} - ${endDate.value}</span> 
+        <button class="btn" id="clearDateFilter">
+            X
+        </button>
+      `;
+  } else {
     infoContainer.innerHTML = "";
-    div.innerHTML = `
-      <span>Visar data mellan perioden ${startDate.value} - ${endDate.value}</span> 
-      <button class="btn" id="clearDateFilter">
-          X
-      </button>
-    `;
-    infoContainer.append(div);
   }
 }
 
@@ -39,10 +38,10 @@ document.addEventListener("click", ({ target }) => {
     isFilteredByDate = false;
     startDate.value = "";
     endDate.value = "";
-    infoContainer.innerHTML = "";
     pagination.setResultsLength(getWeatherData().length);
     weatherData.render();
     pagination.render();
+    render();
     localStorage.setItem("isFilteredByDates", "false");
     // weatherData.getWeatherData();
   }

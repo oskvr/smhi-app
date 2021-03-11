@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv-SE">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,7 +14,7 @@
       integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <title>SMHI - Väderapp</title>
   </head>
   <body>
     <main class="container">
@@ -22,7 +22,12 @@
         <h1>Data från de senaste 5 månaderna</h1>
       </section>
       <div class="search-station">
-        <input id="searchStationInput" type="text" placeholder="Välj ort" />
+        <input
+          id="searchStationInput"
+          type="text"
+          placeholder="Välj station"
+          aria-label="Sök och välj mätstation"
+        />
         <ul class="results" role="navigation"></ul>
       </div>
       <section class="station"></section>
