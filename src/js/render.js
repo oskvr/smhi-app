@@ -7,7 +7,7 @@ import * as dataInfo from "./dataInfo.js";
 export function renderAll() {
   weatherData.render();
   pagination.render();
-  station.render();
-  dataInfo.render();
+  // station.render();
+  // dataInfo.render();
   dateFilter.render();
 }

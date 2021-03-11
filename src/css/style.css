@@ -84,8 +84,8 @@ td {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   border: 1px solid silver;
   width: 15rem;
-  max-height: 20rem;
-  overflow-y: scroll;
+  max-height: 25rem;
+  overflow-y: auto;
   display: none;
 }
 
@@ -105,15 +105,15 @@ td {
   position: absolute;
   top: 0;
   left: 0;
-  width: 5px;
+  width: 3px;
   height: 100%;
-  background: blue;
+  background: rgb(83, 83, 235);
   transition: inherit;
 }
 .results__item:hover,
 .results__item:focus {
   outline: none;
-  background: silver;
+  background: rgb(225, 229, 241);
 }
 
 a {
@@ -201,12 +201,18 @@ a {
 
 /* Laptops */
 @media only screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  .col {
+    width: 100%;
+  }
+  .container {
+    max-width: 700px;
+  }
 }
-
-/* Desktop */
-@media only screen and (max-width: 1025px) {
-}
-
-/* Extra large */
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 996px) {
+  .container {
+    max-width: 960px;
+  }
 }

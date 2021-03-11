@@ -4,6 +4,13 @@ import { getWeatherData, filterByDates } from "./lib/weatherDataService.js";
 const infoContainer = document.querySelector(".date-filter__info");
 const startDate = document.querySelector("#startDate");
 const endDate = document.querySelector("#endDate");
+
+flatpickr("#startDate", {
+  // Hämta äldsta datumet från väderdatan
+});
+flatpickr("#endDate", {
+  maxDate: Date.now(),
+});
 export let isFilteredByDate = false;
 export function filterDates() {
   if (!startDate.value || !endDate.value) return;
@@ -17,6 +24,8 @@ export function filterDates() {
   weatherData.render();
   pagination.render();
   render();
+  console.log(startDate.value);
+  console.log(endDate.value);
   localStorage.setItem("isFilteredByDates", "true");
 }
 

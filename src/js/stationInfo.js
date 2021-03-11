@@ -3,8 +3,7 @@ const container = document.querySelector(".station");
 
 export function render() {
   container.innerHTML = `
-  <h1>${"Hej"}</h1>
-  <h3>${getCurrentStation().name}</h3>
+  <h1>${getCurrentStation().name}</h1>
     <p><strong>Ägare:</strong> ${getCurrentStation().owner}</p>
     <p><strong>id:</strong> ${getCurrentStation().id}</p>
     <p><strong>Höjd:</strong> ${getCurrentStation().height}</p>
