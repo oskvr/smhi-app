@@ -10,3 +10,9 @@ export function on(event, target, fn) {
     }
   });
 }
+
+export function capitalizeFirstLetter(string) {
+  const firstLetter = string.substring(0, 1).toUpperCase();
+  const rest = string.substring(1, string.length);
+  return firstLetter + rest;
+}

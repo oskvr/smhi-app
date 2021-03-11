@@ -1,11 +1,13 @@
 import { on } from "./helpers.js";
 import { getActiveStations, setStation } from "./lib/stationService.js";
 const results = document.querySelector(".results");
-const input = document.querySelector("#searchStationInput");
+const input = document.querySelector("#stationSearchInput");
+const toggleBtn = document.querySelector("#stationSearchToggle");
 let isOpen = false;
 let focusIndex = 0;
 
-on("keydown", "#searchStationInput", (e) => {
+on("keydown", "#stationSearchInput", (e) => {
+  console.log("Hej");
   if (e.key === "ArrowDown") {
     e.preventDefault();
     const result = document.querySelector(`[data-index='${focusIndex}']`);
@@ -48,6 +50,13 @@ on("keydown", ".results", (e) => {
   }
 });
 
+on("click", "#stationSearchToggle", (e) => {
+  if (isOpen) {
+    hideResults();
+  } else {
+    showResults();
+  }
+});
 on("click", ".results__item", (e) => {
   const selectedId = +e.target.dataset.id;
   if (selectedId) {
@@ -58,28 +67,28 @@ on("click", ".results__item", (e) => {
 });
 on("click", "!.results__item", () => {
   if (isOpen) {
+    toggleBtn.classList.remove("active");
     hideResults();
   }
 });
-on("click", "#searchStationInput", () => {
+on("click", "#stationSearchInput", () => {
   if (input.value) {
+    toggleBtn.classList.add("active");
     showResults();
   }
 });
 
-on("input", "#searchStationInput", (e) => {
+on("input", "#stationSearchInput", (e) => {
   const results = document.querySelector(".results");
   if (!input.value) {
     hideResults();
     return;
   }
-  const filtered =
-    input.value &&
-    getActiveStations().filter(({ name }) => {
-      const inputToLower = input.value.toLowerCase();
-      const nameToLower = name.toLowerCase();
-      return nameToLower.includes(inputToLower);
-    });
+  const filtered = getActiveStations().filter(({ name }) => {
+    const inputToLower = input.value.toLowerCase();
+    const nameToLower = name.toLowerCase();
+    return nameToLower.includes(inputToLower);
+  });
   const sorted = sortByMatch(filtered, input.value);
 
   if (sorted.length > 0) {
@@ -111,12 +120,14 @@ function sortByMatch(data, term) {
 }
 
 function showResults() {
+  toggleBtn.classList.add("active");
   results.classList.add("show");
   isOpen = true;
   focusIndex = 0;
 }
 
 function hideResults() {
+  toggleBtn.classList.remove("active");
   results.classList.remove("show");
   isOpen = false;
   focusIndex = 0;

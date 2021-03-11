@@ -2,19 +2,25 @@ import { on } from "./helpers.js";
 import * as weatherData from "./weatherData.js";
 export let paginatedData = [];
 export let currentPage = +localStorage.getItem("currentPage") || 1;
-export let resultsPerPage = +localStorage.getItem("resultsPerPage") || 25;
+export let resultsPerPage = +localStorage.getItem("resultsPerPage") || 50;
 export let totalPages = 0;
 export let totalResults = 0;
+const container = document.querySelector(".pagination");
+const bottomContainer = document.querySelector(".pagination__bottom");
+function getCurrentPageMin() {
+  return resultsPerPage * currentPage - resultsPerPage;
+}
+function getCurrentPageMax() {
+  return currentPage === totalPages
+    ? totalResults
+    : resultsPerPage * currentPage;
+}
 export function render() {
-  const paginateSection = document.querySelector(".pagination");
-  paginateSection.innerHTML = `
+  bottomContainer.innerHTML = "";
+  const html = `
       <div class="pagination__count">
       <p>
-      Visar <strong>${
-        resultsPerPage * currentPage - resultsPerPage
-      }</strong> till <strong>${
-    currentPage === totalPages ? totalResults : resultsPerPage * currentPage
-  }</strong> av
+      Visar <strong>${getCurrentPageMin()}</strong> till <strong>${getCurrentPageMax()}</strong> av
       <strong>${totalResults}</strong> resultat
       </p>     
       <label>
@@ -56,6 +62,12 @@ export function render() {
         </div>
       </div>
     `;
+  container.innerHTML = html;
+
+  // Show paginate buttons at the bottom if page gets too long
+  if (getCurrentPageMax() - getCurrentPageMin() >= 25) {
+    bottomContainer.innerHTML = html;
+  }
 }
 
 export function setCurrentPage(value) {

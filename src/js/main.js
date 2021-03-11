@@ -17,10 +17,10 @@ async function app() {
   render.renderAll();
 }
 
-const dateFilterForm = document.querySelector("#dateFilterForm");
-dateFilterForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  dateFilter.filterDates();
-});
+// const dateFilterForm = document.querySelector("#dateFilterForm");
+// dateFilterForm.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   dateFilter.filterDates();
+// });
 
 window.addEventListener("load", app);

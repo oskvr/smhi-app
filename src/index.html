@@ -23,28 +23,43 @@
   </head>
   <body>
     <main class="container">
-      <section class="data-info">
-        <h1>Data från de senaste 5 månaderna</h1>
-      </section>
-      <div class="search-station">
-        <input
-          id="searchStationInput"
-          type="text"
-          placeholder="Välj station"
-          aria-label="Sök och välj en mätstation"
-        />
-        <ul class="results" role="navigation"></ul>
-      </div>
       <section class="station"></section>
+      <div class="row">
+        <section class="col data-info">
+          <!-- info stuff goes here -->
+        </section>
+        <section class="col graph">
+          <div class="station-search">
+            <span class="station-search__icon">
+              <i class="fa fa-search"></i>
+            </span>
+            <input
+              id="stationSearchInput"
+              class="station-search__input"
+              type="text"
+              aria-label="Sök och välj en mätstation"
+              placeholder="Välj en ort"
+            />
+            <span id="stationSearchToggle" class="station-search__toggle">
+              <i class="fa fa-chevron-up"></i>
+            </span>
+            <ul class="results" role="navigation"></ul>
+          </div>
+          <img
+            src="https://michaeltoth.me/figures/20190416_ggplot_geom_line/simple_line-1.png"
+            alt=""
+          />
+        </section>
+      </div>
       <section class="date-filter">
         <form id="dateFilterForm">
           <label>
             Från
-            <input type="date" id="startDate" />
+            <input type="date" id="startDate" placeholder="Startdatum" />
           </label>
           <label>
             Till
-            <input type="date" id="endDate" />
+            <input type="date" id="endDate" placeholder="Slutdatum" />
           </label>
           <button class="btn">Filtrera</button>
         </form>
@@ -53,18 +68,21 @@
         </div>
       </section>
       <section class="pagination">
-        <!-- pagination stuff gets injected here -->
+        <!-- pagination stuff goes here -->
       </section>
-      <table>
-        <thead>
-          <tr id="test-headers">
-            <!-- headers are injected here -->
-          </tr>
-        </thead>
-        <tbody>
-          <!-- data is injected here -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr id="test-headers">
+              <!-- headers are injected here -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- data is injected here -->
+          </tbody>
+        </table>
+      </div>
+      <section class="pagination pagination__bottom"></section>
     </main>
   </body>
 </html>
