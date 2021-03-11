@@ -12,9 +12,10 @@ main {
 /*----------  TABLE  ----------*/
 
 table {
-  margin-top: 1rem;
+  background: white;
 }
 .table-wrapper {
+  margin: 0;
   width: 100%;
   overflow-x: auto;
 }
@@ -63,6 +64,7 @@ tbody tr:nth-child(even) {
   justify-content: space-between;
   align-items: center;
   color: var(--c-primary-dark);
+  padding: 1rem;
 }
 .pagination__buttons {
   font-size: 0;
@@ -89,10 +91,11 @@ tbody tr:nth-child(even) {
   align-items: center;
   justify-content: space-between;
   border: 1px solid silver;
-  width: 20rem;
+  width: 80%;
   padding: 0.3rem 0.5rem;
 }
 .station-search__input {
+  width: 100%;
   flex-grow: 1;
   border: none;
   padding: 0.8rem;
@@ -107,7 +110,7 @@ tbody tr:nth-child(even) {
   flex-shrink: 0;
 }
 .station-search__toggle {
-  flex-shrink: 0;
+  flex-shrink: 1;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -198,7 +201,7 @@ tbody tr:nth-child(even) {
   font-weight: 700;
 }
 
-/*----------  !UNUSED PILL  ----------*/
+/*----------  PILL  ----------*/
 
 .pill {
   border-radius: 50px;
@@ -206,20 +209,30 @@ tbody tr:nth-child(even) {
   font-size: 0.8rem;
   font-weight: 600;
 }
-.pill-inactive {
+.pill-red {
   background: rgb(255, 210, 210);
   color: rgb(97, 25, 25);
 }
-.pill-active {
-  background: rgb(212, 255, 210);
-  color: rgb(15, 68, 31);
+.pill-yellow {
+  background: rgb(241, 237, 110);
+  color: rgb(95, 100, 21);
+}
+.pill-green {
+  background: rgb(219, 255, 218);
+  color: rgb(21, 97, 44);
 }
 
 /*----------  STATION INFO ETc  ----------*/
-.row {
+body {
+  background: rgb(207, 207, 212);
+}
+.top-section {
   display: flex;
   background: white;
-  padding: 1rem;
+  padding: 1.5rem;
+  background: white;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  margin: 1rem 0;
 }
 .col {
   width: 50%;
@@ -262,9 +275,9 @@ tbody tr:nth-child(even) {
 }
 
 .container {
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 1200px;
 }
 
 /*=============================================
@@ -278,6 +291,10 @@ tbody tr:nth-child(even) {
   }
   .data-info__header_title h1 {
     font-size: 2em;
+  }
+  .station-search__icon,
+  .station-search__toggle {
+    display: none;
   }
 }
 
@@ -294,21 +311,18 @@ tbody tr:nth-child(even) {
     gap: 1rem;
     margin: 2rem 0;
   }
-  .row {
+  .top-section {
     flex-direction: column;
   }
   .col {
     width: 100%;
   }
-  .container {
-    max-width: 70px;
-  }
   .station-info__list {
+    width: 100%;
+  }
+  .station-search {
     width: 100%;
   }
 }
 @media only screen and (max-width: 996px) {
-  .container {
-    max-width: 960px;
-  }
 }

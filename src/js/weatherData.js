@@ -29,12 +29,18 @@ function renderTableBody() {
       const tr = document.createElement("tr");
       for (const [key, value] of Object.entries(data)) {
         const td = document.createElement("td");
-        td.innerText =
+        td.innerHTML =
           {
             from: new Date(value).toLocaleDateString(),
             to: new Date(value).toLocaleDateString(),
             date: new Date(value).toLocaleDateString(),
-            value: value + " " + getUnitString(),
+            value: `<span>${value}</span> ${getUnitString()}`,
+            quality:
+              value === "G"
+                ? `<span class="pill pill-green">Säker</span>`
+                : value === "Y"
+                ? `<span class="pill pill-yellow">Osäker</span>`
+                : `<span class="pill pill-red">Dålig</span>`,
           }[key] ?? value;
         tr.appendChild(td);
       }
@@ -57,7 +63,15 @@ function renderTableHeader() {
       th.setAttribute("data-order", "asc");
       th.setAttribute("data-targetdata", prop);
     }
-    th.innerText = prop;
+    // th.innerText = prop;
+    th.innerHTML =
+      {
+        date: "Datum",
+        from: "Från",
+        to: "Till",
+        value: "Värde",
+        quality: "Mätkvalitet",
+      }[prop] ?? prop;
     tableHead.appendChild(th);
   });
 }

@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"
+    />
     <script type="module" src="js/main.js" defer></script>
     <link
       rel="stylesheet"
@@ -23,12 +26,11 @@
   </head>
   <body>
     <main class="container">
-      <section class="station"></section>
-      <div class="row">
-        <section class="col data-info">
+      <section class="top-section">
+        <article class="col data-info">
           <!-- info stuff goes here -->
-        </section>
-        <section class="col graph">
+        </article>
+        <article class="col graph">
           <div class="station-search">
             <span class="station-search__icon">
               <i class="fa fa-search"></i>
@@ -49,18 +51,22 @@
             src="https://michaeltoth.me/figures/20190416_ggplot_geom_line/simple_line-1.png"
             alt=""
           />
-        </section>
-      </div>
-      <section class="date-filter">
-        <form id="dateFilterForm">
-          <label>
-            Från
-            <input type="date" id="startDate" placeholder="Startdatum" />
-          </label>
-          <label>
-            Till
-            <input type="date" id="endDate" placeholder="Slutdatum" />
-          </label>
+        </article>
+      </section>
+      <section class="">
+        <form id="dateFilterForm" class="date-filter">
+          <input
+            type="date"
+            id="startDate"
+            placeholder="Startdatum"
+            aria-label="Välj ett startdatum"
+          />
+          <input
+            type="date"
+            id="endDate"
+            placeholder="Slutdatum"
+            aria-label="Välj ett slutdatum"
+          />
           <button class="btn">Filtrera</button>
         </form>
         <div class="date-filter__info">
