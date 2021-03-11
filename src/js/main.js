@@ -11,8 +11,6 @@ async function app() {
   // Här ska vi bara initializa stationService och sedan render.all();
 
   await stationService.init(98210);
-  // await station.init("stockholm");
-  //temp variable
   pagination.setResultsLength(getWeatherData().length);
   render.renderAll();
 }

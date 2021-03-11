@@ -64,7 +64,7 @@ export function render() {
     `;
   container.innerHTML = html;
 
-  // Show paginate buttons at the bottom if page gets too long
+  // Shows paging buttons at the bottom as well if page gets long
   if (getCurrentPageMax() - getCurrentPageMin() >= 25) {
     bottomContainer.innerHTML = html;
   }

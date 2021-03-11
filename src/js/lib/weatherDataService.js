@@ -9,7 +9,6 @@ let weatherData = [];
 let filteredWeatherData = [];
 export async function fetchWeatherDataAsync(stationId) {
   // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.
-  // 2 === temperatur medelvärde 1 gång/dygn
   const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/27/station/${stationId}/period/latest-months/data.json`;
   const res = await fetch(url);
   const data = await res.json();
@@ -39,8 +38,6 @@ export function filterByDates(start, end) {
     const converted = new Date(convertedString).getTime();
     return converted >= start && converted <= end;
   });
-  console.log(filteredData);
-  console.log(filteredData);
   filteredWeatherData = filteredData;
 }
 

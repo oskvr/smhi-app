@@ -2,6 +2,7 @@ import * as weatherData from "./weatherData.js";
 import * as pagination from "./pagination.js";
 import { getWeatherData, filterByDates } from "./lib/weatherDataService.js";
 import { on } from "./helpers.js";
+import { initChart } from "./dataChart.js";
 const infoContainer = document.querySelector(".date-filter__info");
 const startDate = document.querySelector("#startDate");
 const endDate = document.querySelector("#endDate");
@@ -26,8 +27,7 @@ function filterDates() {
   weatherData.render();
   pagination.render();
   render();
-  console.log(startDate.value);
-  console.log(endDate.value);
+  initChart();
   localStorage.setItem("isFilteredByDates", "true");
 }
 
@@ -57,6 +57,7 @@ on("click", "#clearDateFilter", () => {
   weatherData.render();
   pagination.render();
   render();
+  initChart();
   localStorage.setItem("isFilteredByDates", "false");
 });
 

@@ -13,6 +13,7 @@
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../node_modules/chart.js/dist/Chart.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/utilities.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -47,10 +48,9 @@
             </span>
             <ul class="results" role="navigation"></ul>
           </div>
-          <img
-            src="https://michaeltoth.me/figures/20190416_ggplot_geom_line/simple_line-1.png"
-            alt=""
-          />
+          <div class="chart-wrapper">
+            <canvas id="chart" width="100" height="100"></canvas>
+          </div>
         </article>
       </section>
       <section class="">

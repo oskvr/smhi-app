@@ -1,3 +1,4 @@
+import { initChart } from "../dataChart.js";
 import { renderAll } from "../render.js";
 import {
   fetchWeatherDataAsync,
@@ -17,6 +18,7 @@ export async function init(stationId) {
   stations.current = getStationById(stationId);
   const weatherData = await fetchWeatherDataAsync(stationId);
   setWeatherData(weatherData);
+  initChart();
 }
 
 export async function setStation(value) {
@@ -28,6 +30,7 @@ export async function setStation(value) {
   }
   fetchWeatherDataAsync(stations.current.id).then((data) => {
     setWeatherData(data);
+    initChart();
     renderAll();
     console.log(getWeatherData());
   });
@@ -49,7 +52,7 @@ function getStationByName(stationName) {
 }
 async function fetchAllStationsAsync() {
   const url =
-    "https://opendata-download-metobs.smhi.se/api/version/latest/parameter/2.json";
+    "https://opendata-download-metobs.smhi.se/api/version/latest/parameter/27.json";
   const res = await fetch(url);
   const { station } = await res.json();
   return station;
