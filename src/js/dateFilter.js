@@ -53,8 +53,8 @@ export function render() {
     infoContainer.classList.remove("hidden");
     infoContainer.innerHTML = `
     <span>Visar data för perioden ${startDate.value} - ${endDate.value}</span> 
-    <button class="btn-small btn-danger" id="clearDateFilter">
-    X
+    <button id="clearDateFilter">
+    <i class="fa fa-times-circle" style="font-size: 1.1rem; color: red;"></i>
     </button>
     `;
   } else {

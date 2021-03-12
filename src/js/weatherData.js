@@ -40,8 +40,8 @@ function renderTableBody() {
               value === "G"
                 ? `<span class="pill pill-green">Säker</span>`
                 : value === "Y"
-                ? `<span class="pill pill-yellow">Osäker</span>`
-                : `<span class="pill pill-red">Dålig</span>`,
+                ? `<span class="pill pill-yellow">Ganska säker</span>`
+                : `<span class="pill pill-red">Osäker</span>`,
           }[key] ?? value;
         tr.appendChild(td);
       }
