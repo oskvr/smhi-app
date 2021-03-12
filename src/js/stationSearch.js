@@ -38,17 +38,18 @@ on("keydown", ".results", (e) => {
         resultItems[focusIndex].focus();
         break;
       case "Enter":
-        const selectedId = +resultItems[focusIndex].dataset.id;
-        if (selectedId) {
-          setStation(selectedId);
-          hideResults();
-          input.value = "";
-        }
+        updateStation(+e.target.dataset.id);
         break;
     }
   }
 });
-
+function updateStation(stationId) {
+  if (stationId) {
+    setStation(stationId);
+    hideResults();
+    input.value = "";
+  }
+}
 on("click", "#stationSearchToggle", () => {
   console.log(isOpen);
   if (isOpen) {
@@ -58,12 +59,7 @@ on("click", "#stationSearchToggle", () => {
   }
 });
 on("click", ".results__item", (e) => {
-  const selectedId = +e.target.dataset.id;
-  if (selectedId) {
-    setStation(selectedId);
-    input.value = "";
-    hideResults();
-  }
+  updateStation(+e.target.dataset.id);
 });
 on("click", "!.results__item", () => {
   if (isOpen) {

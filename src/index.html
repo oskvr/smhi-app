@@ -58,18 +58,22 @@
           <input
             type="date"
             id="startDate"
+            class="date-filter__input"
             placeholder="Startdatum"
             aria-label="Välj ett startdatum"
           />
           <input
             type="date"
             id="endDate"
+            class="date-filter__input"
             placeholder="Slutdatum"
             aria-label="Välj ett slutdatum"
           />
-          <button class="btn btn-primary">Filtrera</button>
+          <button id="dateFilterButton" class="btn btn-primary disabled">
+            Filtrera
+          </button>
         </form>
-        <div class="date-filter__info">
+        <div class="date-filter__info hidden">
           <!-- show dates when filtered -->
         </div>
       </section>

@@ -1,7 +1,12 @@
 import { initChart } from "../dataChart.js";
 import { resetDateFilter } from "../dateFilter.js";
+import { setResultsLength } from "../pagination.js";
 import { renderAll } from "../render.js";
-import { fetchWeatherDataAsync, setWeatherData } from "./weatherDataService.js";
+import {
+  fetchWeatherDataAsync,
+  getWeatherData,
+  setWeatherData,
+} from "./weatherDataService.js";
 
 const stations = {
   all: [],
@@ -15,6 +20,7 @@ export async function init(stationId) {
   stations.current = getStationById(stationId);
   const weatherData = await fetchWeatherDataAsync(stationId);
   setWeatherData(weatherData);
+  setResultsLength(getWeatherData().length);
   initChart();
 }
 
@@ -24,6 +30,7 @@ export async function setStation(value) {
   } else if (typeof value === "number") {
     stations.current = getStationById(value);
   }
+
   fetchWeatherDataAsync(stations.current.id).then((data) => {
     resetDateFilter();
     setWeatherData(data);

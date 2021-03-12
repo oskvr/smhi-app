@@ -1,3 +1,4 @@
+import { initChart } from "./dataChart.js";
 import {
   getPaginatedWeatherData,
   getUnitString,
@@ -93,5 +94,6 @@ document.addEventListener("click", ({ target }) => {
     latestSort.order = target.dataset.order;
     sortWeatherData(targetData, sortOrder);
     setCurrentPage(1);
+    initChart();
   }
 });

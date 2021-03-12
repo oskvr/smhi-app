@@ -7,17 +7,7 @@ export let totalPages = 0;
 export let totalResults = 0;
 const container = document.querySelector(".pagination");
 const bottomContainer = document.querySelector(".pagination__bottom");
-function getCurrentPageMin() {
-  return resultsPerPage * currentPage - resultsPerPage;
-}
-function getCurrentPageMax() {
-  return currentPage === totalPages
-    ? totalResults
-    : resultsPerPage * currentPage;
-}
-function shouldTruncateButtons() {
-  return totalPages > 8;
-}
+
 export function render() {
   bottomContainer.innerHTML = "";
   const html = `
@@ -27,7 +17,7 @@ export function render() {
       <strong>${totalResults}</strong> resultat
       </p>     
       <label>
-      Max resultat per sida: 
+      Per sida: 
       <select name="" id="results-select">
       <option value="25" ${resultsPerPage === 25 ? "selected" : ""}>25</option>
       <option value="50" ${resultsPerPage === 50 ? "selected" : ""}>50</option>
@@ -110,7 +100,6 @@ export function setResultsPerPage(value) {
   totalPages = getTotalPages();
   setCurrentPage(1);
   localStorage.setItem("resultsPerPage", value);
-  render();
 }
 
 export function setResultsLength(dataLength) {
@@ -120,6 +109,17 @@ export function setResultsLength(dataLength) {
 
 function getTotalPages() {
   return Math.ceil(totalResults / resultsPerPage);
+}
+function getCurrentPageMin() {
+  return resultsPerPage * currentPage - resultsPerPage;
+}
+function getCurrentPageMax() {
+  return currentPage === totalPages
+    ? totalResults
+    : resultsPerPage * currentPage;
+}
+function shouldTruncateButtons() {
+  return totalPages > 8;
 }
 
 on("click", "#nextpage", nextPage);
