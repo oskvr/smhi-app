@@ -12,9 +12,7 @@ export function render() {
   const html = `
       <div class="pagination__count">
       <p>
-      Visar <strong>${
-        currentPage === 1 ? 1 : getCurrentPageMin()
-      }</strong> till <strong>${getCurrentPageMax()}</strong> av
+      Visar <strong>${getCurrentPageMin()}</strong> till <strong>${getCurrentPageMax()}</strong> av
       <strong>${totalResults}</strong> resultat
       </p>     
       <label>
@@ -109,7 +107,7 @@ function getTotalPages() {
   return Math.ceil(totalResults / resultsPerPage);
 }
 function getCurrentPageMin() {
-  return resultsPerPage * currentPage - resultsPerPage;
+  return resultsPerPage * currentPage - resultsPerPage + 1;
 }
 function getCurrentPageMax() {
   return currentPage === totalPages
