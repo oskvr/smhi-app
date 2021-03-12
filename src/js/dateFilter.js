@@ -1,19 +1,23 @@
 import * as weatherData from "./weatherData.js";
 import * as pagination from "./pagination.js";
-import { getWeatherData, filterByDates } from "./lib/weatherDataService.js";
+import {
+  getWeatherData,
+  filterByDates,
+  getMinDate,
+} from "./lib/weatherDataService.js";
 import { on } from "./helpers.js";
 import { initChart } from "./dataChart.js";
 const infoContainer = document.querySelector(".date-filter__info");
 const startDate = document.querySelector("#startDate");
 const endDate = document.querySelector("#endDate");
 
-flatpickr("#startDate", {
-  // Hämta äldsta datumet från väderdatan
-});
-flatpickr("#endDate", {
-  maxDate: Date.now(),
-});
 export let isFilteredByDate = false;
+export function resetDateFilter() {
+  isFilteredByDate = false;
+  startDate.value = "";
+  endDate.value = "";
+  pagination.setCurrentPage(1);
+}
 function filterDates() {
   if (!startDate.value || !endDate.value) return;
   isFilteredByDate = true;
@@ -28,10 +32,15 @@ function filterDates() {
   pagination.render();
   render();
   initChart();
-  localStorage.setItem("isFilteredByDates", "true");
 }
 
 export function render() {
+  flatpickr("#startDate", {
+    minDate: getMinDate(),
+  });
+  flatpickr("#endDate", {
+    maxDate: Date.now(),
+  });
   if (isFilteredByDate) {
     infoContainer.innerHTML = `
         <span>Visar data mellan perioden ${startDate.value} - ${endDate.value}</span> 
@@ -50,27 +59,10 @@ on("submit", "#dateFilterForm", (e) => {
 });
 
 on("click", "#clearDateFilter", () => {
-  isFilteredByDate = false;
-  startDate.value = "";
-  endDate.value = "";
+  resetDateFilter();
   pagination.setResultsLength(getWeatherData().length);
   weatherData.render();
   pagination.render();
   render();
   initChart();
-  localStorage.setItem("isFilteredByDates", "false");
 });
-
-// document.addEventListener("click", ({ target }) => {
-//   if (target.closest("#clearDateFilter")) {
-//     isFilteredByDate = false;
-//     startDate.value = "";
-//     endDate.value = "";
-//     pagination.setResultsLength(getWeatherData().length);
-//     weatherData.render();
-//     pagination.render();
-//     render();
-//     localStorage.setItem("isFilteredByDates", "false");
-//     // weatherData.getWeatherData();
-//   }
-// });

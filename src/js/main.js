@@ -5,7 +5,7 @@ import * as pagination from "./pagination.js";
 import * as dateFilter from "./dateFilter.js";
 import * as stationService from "./lib/stationService.js";
 import * as render from "./render.js";
-import { getWeatherData } from "./lib/weatherDataService.js";
+import { getMinDate, getWeatherData } from "./lib/weatherDataService.js";
 
 async function app() {
   // Här ska vi bara initializa stationService och sedan render.all();
@@ -13,6 +13,7 @@ async function app() {
   await stationService.init(98210);
   pagination.setResultsLength(getWeatherData().length);
   render.renderAll();
+  getMinDate();
 }
 
 // const dateFilterForm = document.querySelector("#dateFilterForm");

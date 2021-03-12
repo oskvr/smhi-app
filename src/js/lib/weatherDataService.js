@@ -8,7 +8,7 @@ import { isFilteredByDate } from "../dateFilter.js";
 let weatherData = [];
 let filteredWeatherData = [];
 export async function fetchWeatherDataAsync(stationId) {
-  // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.
+  // Alla endpoints: https://opendata-download-metobs.smhi.se/api/version/latest.json
   const url = `https://opendata-download-metobs.smhi.se/api/version/latest/parameter/27/station/${stationId}/period/latest-months/data.json`;
   const res = await fetch(url);
   const data = await res.json();
@@ -53,11 +53,9 @@ export function sortWeatherData(targetData, sortOrder) {
     if (typeof a[targetData] === "string" && isNaN(a[targetData])) {
       // Sort by string
       if (sortOrder === "asc") {
-        // return a[targetData] > b[targetData] ? 1 : -1;
         return sortAscString(a[targetData], b[targetData]);
       } else {
         return sortDescString(a[targetData], b[targetData]);
-        // return b[targetData] > a[targetData] ? 1 : -1;
       }
     } else {
       // Sort by number
@@ -85,6 +83,16 @@ export function getUnitString() {
   }
 }
 
+export function getMinDate() {
+  let minDate = Number.MAX_VALUE;
+  weatherData.value.forEach(({ date }) => {
+    if (date < minDate) {
+      minDate = date;
+    }
+  });
+  return minDate;
+}
+
 export function getPaginatedWeatherData() {
   if (resultsPerPage === totalResults) return getWeatherData();
   const minIndex = currentPage * resultsPerPage - resultsPerPage;
@@ -92,7 +100,7 @@ export function getPaginatedWeatherData() {
   return getWeatherData().filter((_, i) => i >= minIndex && i < maxIndex);
 }
 
-export function get() {
+export function getData() {
   const output = {
     parameter: {
       key: weatherData.parameter.key,

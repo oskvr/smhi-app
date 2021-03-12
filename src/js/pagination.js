@@ -15,6 +15,9 @@ function getCurrentPageMax() {
     ? totalResults
     : resultsPerPage * currentPage;
 }
+function shouldTruncateButtons() {
+  return totalPages > 8 || window.innerHeight < 500;
+}
 export function render() {
   bottomContainer.innerHTML = "";
   const html = `
@@ -26,9 +29,11 @@ export function render() {
       <label>
       Max resultat per sida: 
       <select name="" id="results-select">
-      <option value="25" ${resultsPerPage === 25 && "selected"}>25</option>
-      <option value="50" ${resultsPerPage === 50 && "selected"}>50</option>
-      <option value="100" ${resultsPerPage === 100 && "selected"}>100</option>
+      <option value="25" ${resultsPerPage === 25 ? "selected" : ""}>25</option>
+      <option value="50" ${resultsPerPage === 50 ? "selected" : ""}>50</option>
+      <option value="100" ${
+        resultsPerPage === 100 ? "selected" : ""
+      }>100</option>
       <option value=${totalResults} ${
     resultsPerPage === totalResults ? "selected" : ""
   }>Visa alla</option>
@@ -37,7 +42,7 @@ export function render() {
       </div>
         <div class="pagination__buttons">
           <button id="previouspage" class="${
-            currentPage === 1 && "disabled"
+            currentPage === 1 ? "disabled" : ""
           } btn btn-paginate">
             <i class="fa fa-chevron-left">
             </i>
@@ -45,11 +50,27 @@ export function render() {
           ${(function addPageButtons() {
             let html = "";
             for (let i = 1; i <= totalPages; i++) {
-              html += `
+              if (shouldTruncateButtons()) {
+                const truncatedCount = 2;
+                if (
+                  (i > currentPage - truncatedCount &&
+                    i < currentPage + truncatedCount) ||
+                  i === 1 ||
+                  i === totalPages
+                ) {
+                  html += `
+                    <button class="btn btn-paginate btn-paginate__number ${
+                      i === currentPage ? "active" : ""
+                    }">${i}</button>
+                  `;
+                }
+              } else {
+                html += `
                 <button class="btn btn-paginate btn-paginate__number ${
-                  i === currentPage && "active"
+                  i === currentPage ? "active" : ""
                 }">${i}</button>
               `;
+              }
             }
             return html;
           })()}
@@ -64,7 +85,7 @@ export function render() {
     `;
   container.innerHTML = html;
 
-  // Shows paging buttons at the bottom as well if page gets long
+  // Show paging buttons at the bottom as well if page gets long
   if (getCurrentPageMax() - getCurrentPageMin() >= 25) {
     bottomContainer.innerHTML = html;
   }

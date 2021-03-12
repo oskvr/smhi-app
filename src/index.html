@@ -31,7 +31,7 @@
         <article class="col data-info">
           <!-- info stuff goes here -->
         </article>
-        <article class="col graph">
+        <article class="col">
           <div class="station-search">
             <span class="station-search__icon">
               <i class="fa fa-search"></i>
@@ -41,7 +41,7 @@
               class="station-search__input"
               type="text"
               aria-label="Sök och välj en mätstation"
-              placeholder="Välj en ort"
+              placeholder="Sök mätstation"
             />
             <span id="stationSearchToggle" class="station-search__toggle">
               <i class="fa fa-chevron-up"></i>
@@ -67,28 +67,30 @@
             placeholder="Slutdatum"
             aria-label="Välj ett slutdatum"
           />
-          <button class="btn">Filtrera</button>
+          <button class="btn btn-primary">Filtrera</button>
         </form>
         <div class="date-filter__info">
           <!-- show dates when filtered -->
         </div>
       </section>
-      <section class="pagination">
-        <!-- pagination stuff goes here -->
-      </section>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr id="test-headers">
-              <!-- headers are injected here -->
-            </tr>
-          </thead>
-          <tbody>
-            <!-- data is injected here -->
-          </tbody>
-        </table>
+      <div>
+        <section class="pagination">
+          <!-- pagination stuff goes here -->
+        </section>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr id="test-headers">
+                <!-- headers are injected here -->
+              </tr>
+            </thead>
+            <tbody>
+              <!-- data is injected here -->
+            </tbody>
+          </table>
+        </div>
+        <section class="pagination pagination__bottom"></section>
       </div>
-      <section class="pagination pagination__bottom"></section>
     </main>
   </body>
 </html>

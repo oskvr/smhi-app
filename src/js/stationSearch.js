@@ -7,7 +7,6 @@ let isOpen = false;
 let focusIndex = 0;
 
 on("keydown", "#stationSearchInput", (e) => {
-  console.log("Hej");
   if (e.key === "ArrowDown") {
     e.preventDefault();
     const result = document.querySelector(`[data-index='${focusIndex}']`);
@@ -50,7 +49,8 @@ on("keydown", ".results", (e) => {
   }
 });
 
-on("click", "#stationSearchToggle", (e) => {
+on("click", "#stationSearchToggle", () => {
+  console.log(isOpen);
   if (isOpen) {
     hideResults();
   } else {

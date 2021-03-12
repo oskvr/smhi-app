@@ -1,10 +1,7 @@
 import { initChart } from "../dataChart.js";
+import { resetDateFilter } from "../dateFilter.js";
 import { renderAll } from "../render.js";
-import {
-  fetchWeatherDataAsync,
-  getWeatherData,
-  setWeatherData,
-} from "./weatherDataService.js";
+import { fetchWeatherDataAsync, setWeatherData } from "./weatherDataService.js";
 
 const stations = {
   all: [],
@@ -22,17 +19,16 @@ export async function init(stationId) {
 }
 
 export async function setStation(value) {
-  console.log(typeof value);
   if (typeof value === "string") {
     stations.current = getStationByName(value);
   } else if (typeof value === "number") {
     stations.current = getStationById(value);
   }
   fetchWeatherDataAsync(stations.current.id).then((data) => {
+    resetDateFilter();
     setWeatherData(data);
     initChart();
     renderAll();
-    console.log(getWeatherData());
   });
 }
 export function getCurrentStation() {

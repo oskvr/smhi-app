@@ -1,5 +1,5 @@
 import {
-  get,
+  getData,
   getWeatherData,
   getUnitString,
 } from "./lib/weatherDataService.js";
@@ -14,11 +14,11 @@ export function initChart() {
     type: "line",
     data: {
       labels: getWeatherData().map((data) =>
-        new Date(data.date).toDateString()
+        new Date(data.date).toLocaleDateString()
       ),
       datasets: [
         {
-          label: `${get().parameter.name} (${getUnitString()})`,
+          label: `${getData().parameter.name} (${getUnitString()})`,
           data: getWeatherData().map((data) => data.value),
           backgroundColor: "pink",
           borderColor: "red",

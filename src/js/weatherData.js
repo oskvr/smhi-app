@@ -31,9 +31,9 @@ function renderTableBody() {
         const td = document.createElement("td");
         td.innerHTML =
           {
-            from: new Date(value).toLocaleDateString(),
-            to: new Date(value).toLocaleDateString(),
-            date: new Date(value).toLocaleDateString(),
+            from: new Date(value).toLocaleString(),
+            to: new Date(value).toLocaleString(),
+            date: new Date(value).toLocaleString(),
             value: `<span>${value}</span> ${getUnitString()}`,
             quality:
               value === "G"
