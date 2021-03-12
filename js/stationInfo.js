@@ -46,36 +46,3 @@ export function render() {
     </article>
   `;
 }
-
-// <li class="station-info__list_item">
-//           <div class="col">
-//             <strong>Ägare</strong>
-//           </div>
-//           <div class="col">
-//             <span>${getCurrentStation().owner}</span>
-//           </div>
-//         </li>
-//         <li class="station-info__list_item">
-//           <div class="col">
-//             <strong>ID</strong>
-//           </div>
-//           <div class="col">
-//             <span>${getCurrentStation().id}</span>
-//           </div>
-//         </li>
-//         <li class="station-info__list_item">
-//           <div class="col">
-//             <strong>Höjd</strong>
-//           </div>
-//           <div class="col">
-//             <span>${getCurrentStation().height} m</span>
-//           </div>
-//         </li>
-//         <li class="station-info__list_item">
-//           <div class="col">
-//             <strong>Longitud</strong>
-//           </div>
-//           <div class="col">
-//             <span>${getCurrentStation().longitude}</span>
-//           </div>
-//         </li>

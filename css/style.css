@@ -334,8 +334,8 @@ body {
 .date-filter__info:not(.hidden) {
   display: inline-block;
   margin: 0.5rem 0;
-  background: rgb(200, 231, 200);
-  color: rgb(55, 109, 55);
+  background: rgb(215, 248, 215);
+  color: rgb(48, 94, 48);
   padding: 1rem;
 }
 
