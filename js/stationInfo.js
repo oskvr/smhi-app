@@ -19,7 +19,7 @@ export function render() {
     <header class="data-info__header">
       <div class="data-info__header_title">
         <h1>${getData().station.name}</h1>
-        <h3>${getData().parameter.name}</h3>
+        <h2>${getData().parameter.name}</h2>
       </div>
       <small class="data-info__header_summary"
         >${capitalizeFirstLetter(getData().parameter.summary)}</small

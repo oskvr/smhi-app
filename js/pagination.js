@@ -78,10 +78,8 @@ export function render() {
     `;
   container.innerHTML = html;
 
-  // Show paging buttons at the bottom as well if page gets long
-  if (getCurrentPageMax() - getCurrentPageMin() >= 25) {
-    bottomContainer.innerHTML = html;
-  }
+  // Show paging buttons below the table as well
+  bottomContainer.innerHTML = html;
 }
 
 export function setCurrentPage(value) {
