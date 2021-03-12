@@ -16,7 +16,7 @@ function getCurrentPageMax() {
     : resultsPerPage * currentPage;
 }
 function shouldTruncateButtons() {
-  return totalPages > 8 || window.innerHeight < 500;
+  return totalPages > 8;
 }
 export function render() {
   bottomContainer.innerHTML = "";
