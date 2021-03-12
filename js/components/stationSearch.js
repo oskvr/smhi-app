@@ -75,7 +75,7 @@ on("click", "#stationSearchInput", () => {
   }
 });
 
-on("input", "#stationSearchInput", (e) => {
+on("input", "#stationSearchInput", () => {
   const results = document.querySelector(".results");
   if (!input.value) {
     hideResults();
@@ -89,7 +89,6 @@ on("input", "#stationSearchInput", (e) => {
   const sorted = sortByMatch(filtered, input.value);
 
   showResults();
-  5;
   if (sorted.length && sorted) {
     results.innerHTML = `
     ${sorted

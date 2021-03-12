@@ -54,7 +54,7 @@ export function render() {
     infoContainer.innerHTML = `
     <span>Visar data för perioden ${startDate.value} - ${endDate.value}</span> 
     <button id="clearDateFilter">
-    <i class="far fa-times-circle" style="font-size: 1.1rem; color: darkrod;"></i>
+    <i class="far fa-times-circle" style="font-size: 1.1rem;"></i>
     </button>
     `;
   } else {
