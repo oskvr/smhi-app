@@ -50,26 +50,27 @@ function updateStation(stationId) {
     input.value = "";
   }
 }
-on("click", "#stationSearchToggle", () => {
-  console.log(isOpen);
+toggleBtn.addEventListener("click", () => {
+  if (!input.value) return;
   if (isOpen) {
     hideResults();
   } else {
     showResults();
   }
 });
+
 on("click", ".results__item", (e) => {
   updateStation(+e.target.dataset.id);
 });
-on("click", "!.results__item", () => {
+on("click", "!.results__item", (e) => {
   if (isOpen) {
+    if (e.target === toggleBtn) return;
     toggleBtn.classList.remove("active");
     hideResults();
   }
 });
 on("click", "#stationSearchInput", () => {
   if (input.value) {
-    toggleBtn.classList.add("active");
     showResults();
   }
 });
@@ -87,22 +88,23 @@ on("input", "#stationSearchInput", (e) => {
   });
   const sorted = sortByMatch(filtered, input.value);
 
-  if (sorted.length > 0) {
-    showResults();
+  showResults();
+  5;
+  if (sorted.length && sorted) {
     results.innerHTML = `
-          ${sorted
-            .map((station, index) => {
-              return `
-              <li tabindex="0" data-id=${station.id} data-index=${index} class="results__item">
-              ${station.name}
-              </li>
-              `;
-            })
-            .join("")}
-            `;
+    ${sorted
+      .map((station, index) => {
+        return `
+        <li tabindex="0" data-id=${station.id} data-index=${index} class="results__item">
+        ${station.name}
+        </li>
+        `;
+      })
+      .join("")}
+      `;
   } else {
     results.innerHTML = `
-            <li class="results__item">Inga orter hittades</li>
+      <li class="results__item">Inga orter hittades</li>
             `;
   }
 });

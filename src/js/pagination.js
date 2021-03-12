@@ -1,4 +1,5 @@
 import { on } from "./helpers.js";
+import { renderAll } from "./render.js";
 import * as weatherData from "./weatherData.js";
 export let paginatedData = [];
 export let currentPage = +localStorage.getItem("currentPage") || 1;
@@ -13,7 +14,9 @@ export function render() {
   const html = `
       <div class="pagination__count">
       <p>
-      Visar <strong>${getCurrentPageMin()}</strong> till <strong>${getCurrentPageMax()}</strong> av
+      Visar <strong>${
+        currentPage === 1 ? 1 : getCurrentPageMin()
+      }</strong> till <strong>${getCurrentPageMax()}</strong> av
       <strong>${totalResults}</strong> resultat
       </p>     
       <label>
@@ -33,7 +36,7 @@ export function render() {
         <div class="pagination__buttons">
           <button id="previouspage" class="${
             currentPage === 1 ? "disabled" : ""
-          } btn btn-paginate">
+          } btn btn-paginate" aria-label="Previous page">
             <i class="fa fa-chevron-left">
             </i>
           </button>
@@ -66,7 +69,7 @@ export function render() {
           })()}
           <button id="nextpage" class="${
             currentPage === totalPages && "disabled"
-          } btn btn-paginate">
+          } btn btn-paginate" aria-label="Next page">
             <i class="fa fa-chevron-right">
             </i>
           </button>
@@ -84,8 +87,9 @@ export function render() {
 export function setCurrentPage(value) {
   currentPage = value;
   localStorage.setItem("currentPage", value);
-  render();
-  weatherData.render();
+  // render();
+  // weatherData.render();
+  renderAll();
 }
 function previousPage() {
   if (currentPage === 1) return;

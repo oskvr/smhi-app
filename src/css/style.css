@@ -116,6 +116,11 @@ tbody tr:nth-child(even) {
   position: relative;
 }
 
+/* Necessary for event listener bug */
+#stationSearchToggle .fa {
+  pointer-events: none;
+}
+
 .results {
   position: absolute;
   top: 45px;
@@ -188,6 +193,7 @@ tbody tr:nth-child(even) {
   padding: 0.1rem 0.4rem;
 }
 .btn.disabled {
+  z-index: -1;
   opacity: 0.5;
   cursor: auto;
 }
@@ -243,7 +249,7 @@ tbody tr:nth-child(even) {
   color: rgb(21, 97, 44);
 }
 
-/*----------  STATION INFO ETc  ----------*/
+/*----------  STATION INFO ETC  ----------*/
 body {
   background: rgb(245, 245, 255);
 }
@@ -310,11 +316,16 @@ body {
 
 /*----------  DATE FILTER  ----------*/
 .date-filter {
-  height: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.date-filter__input {
+  padding: 0.5rem;
 }
 .date-filter button,
 .date-filter__input {
-  height: 100%;
+  height: 2.5rem;
 }
 .date-filter__info:not(.hidden) {
   display: inline-block;
@@ -357,8 +368,8 @@ body {
   .btn-paginate__number:not(.btn-paginate__number.active) {
     display: none;
   }
-  .chart-wrapper {
-    display: none;
+  .date-filter {
+    flex-direction: column;
   }
 }
 /* Laptops */
