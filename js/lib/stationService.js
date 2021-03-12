@@ -1,4 +1,6 @@
+// Needed for loading the stationSearch module
 import * as stationSearch from "../stationSearch.js";
+
 import { initChart } from "../dataChart.js";
 import { resetDateFilter } from "../dateFilter.js";
 import { setResultsLength } from "../pagination.js";
@@ -20,6 +22,7 @@ export async function init(stationId) {
   stations.active = stations.all.filter((station) => station.active);
   stations.current = getStationById(stationId);
   const weatherData = await fetchWeatherDataAsync(stationId);
+  weatherData.value.reverse();
   setWeatherData(weatherData);
   setResultsLength(getWeatherData().length);
   initChart();
@@ -34,6 +37,7 @@ export async function setStation(value) {
 
   fetchWeatherDataAsync(stations.current.id).then((data) => {
     resetDateFilter();
+    data.value.reverse();
     setWeatherData(data);
     initChart();
     renderAll();

@@ -10,8 +10,8 @@ import { setCurrentPage } from "./pagination.js";
 const tableBody = document.querySelector("tbody");
 const tableHead = document.querySelector("#test-headers");
 const latestSort = {
-  prop: "",
-  order: "",
+  prop: "date",
+  order: "desc",
 };
 export let cachedWeatherData = [];
 
@@ -38,10 +38,10 @@ function renderTableBody() {
             value: `<span>${value}</span> ${getUnitString()}`,
             quality:
               value === "G"
-                ? `<span class="pill pill-green">Säker</span>`
+                ? `<span class="pill pill-green">Godkänd</span>`
                 : value === "Y"
-                ? `<span class="pill pill-yellow">Ganska säker</span>`
-                : `<span class="pill pill-red">Osäker</span>`,
+                ? `<span class="pill pill-yellow">Osäker</span>`
+                : `<span class="pill pill-red">Dålig</span>`,
           }[key] ?? value;
         tr.appendChild(td);
       }

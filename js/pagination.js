@@ -1,8 +1,7 @@
 import { on } from "./helpers.js";
 import { renderAll } from "./render.js";
-import * as weatherData from "./weatherData.js";
 export let paginatedData = [];
-export let currentPage = +localStorage.getItem("currentPage") || 1;
+export let currentPage = 1;
 export let resultsPerPage = +localStorage.getItem("resultsPerPage") || 50;
 export let totalPages = 0;
 export let totalResults = 0;
@@ -84,9 +83,7 @@ export function render() {
 
 export function setCurrentPage(value) {
   currentPage = value;
-  localStorage.setItem("currentPage", value);
-  // render();
-  // weatherData.render();
+  // localStorage.setItem("currentPage", value);
   renderAll();
 }
 function previousPage() {
