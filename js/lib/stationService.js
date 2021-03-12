@@ -1,15 +1,16 @@
 // Needed for loading the stationSearch module
-import * as stationSearch from "../stationSearch.js";
+import * as stationSearch from "../components/stationSearch.js";
 
-import { initChart } from "../dataChart.js";
-import { resetDateFilter } from "../dateFilter.js";
-import { setResultsLength } from "../pagination.js";
-import { renderAll } from "../render.js";
+import { initChart } from "../components/dataChart.js";
+import { resetDateFilter } from "../components/dateFilter.js";
+import { setResultsLength } from "../components/pagination.js";
+import { renderAll } from "./render.js";
 import {
   fetchWeatherDataAsync,
   getWeatherData,
   setWeatherData,
 } from "./weatherDataService.js";
+import { resetSort } from "../components/weatherData.js";
 
 const stations = {
   all: [],
@@ -37,6 +38,7 @@ export async function setStation(value) {
 
   fetchWeatherDataAsync(stations.current.id).then((data) => {
     resetDateFilter();
+    resetSort();
     data.value.reverse();
     setWeatherData(data);
     initChart();

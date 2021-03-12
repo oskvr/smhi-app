@@ -1,19 +1,25 @@
-import { getCurrentStation } from "./lib/stationService.js";
-import { getData } from "./lib/weatherDataService.js";
-import { capitalizeFirstLetter } from "./helpers.js";
+import { getCurrentStation } from "../lib/stationService.js";
+import { getData } from "../lib/weatherDataService.js";
+import { capitalizeFirstLetter } from "../lib/helpers.js";
 const container = document.querySelector(".data-info");
 
 export function render() {
   const viewData = [
     { key: "Ägare", value: getCurrentStation().owner },
     { key: "ID", value: getCurrentStation().id },
+    {
+      key: "Upprättad",
+      value: new Date(getCurrentStation().from).toLocaleDateString(),
+    },
+    {
+      key: "Status",
+      value: getCurrentStation().active
+        ? `<span class="pill pill-green">Aktiv</span>`
+        : `<span class="pill pill-red">Inaktiv</span>`,
+    },
     { key: "Höjd", value: Math.round(getCurrentStation().height) + " m" },
     { key: "Longitud", value: getCurrentStation().longitude },
     { key: "Latitud", value: getCurrentStation().latitude },
-    {
-      key: "Senast uppdaterad",
-      value: new Date(getCurrentStation().updated).toLocaleDateString(),
-    },
   ];
   container.innerHTML = `
     <header class="data-info__header">

@@ -4,22 +4,26 @@ import {
   getUnitString,
   getWeatherDataProps,
   sortWeatherData,
-} from "./lib/weatherDataService.js";
+} from "../lib/weatherDataService.js";
 import { setCurrentPage } from "./pagination.js";
 
 const tableBody = document.querySelector("tbody");
 const tableHead = document.querySelector("#test-headers");
 const latestSort = {
-  prop: "date",
-  order: "desc",
+  prop: "",
+  order: "",
 };
-export let cachedWeatherData = [];
+resetSort();
 
 export function render() {
   renderTableBody();
   renderTableHeader();
 }
 
+export function resetSort() {
+  latestSort.prop = "date";
+  latestSort.order = "desc";
+}
 function renderTableBody() {
   const weatherData = getPaginatedWeatherData();
   tableBody.innerHTML = "";
@@ -40,7 +44,7 @@ function renderTableBody() {
               value === "G"
                 ? `<span class="pill pill-green">Godkänd</span>`
                 : value === "Y"
-                ? `<span class="pill pill-yellow">Osäker</span>`
+                ? `<span class="pill pill-yellow">Instabil</span>`
                 : `<span class="pill pill-red">Dålig</span>`,
           }[key] ?? value;
         tr.appendChild(td);
@@ -64,7 +68,6 @@ function renderTableHeader() {
       th.setAttribute("data-order", "asc");
       th.setAttribute("data-targetdata", prop);
     }
-    // th.innerText = prop;
     th.innerHTML =
       {
         date: "Datum",

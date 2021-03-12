@@ -1,5 +1,5 @@
-import { on } from "./helpers.js";
-import { renderAll } from "./render.js";
+import { on } from "../lib/helpers.js";
+import { renderAll } from "../lib/render.js";
 export let paginatedData = [];
 export let currentPage = 1;
 export let resultsPerPage = +localStorage.getItem("resultsPerPage") || 50;

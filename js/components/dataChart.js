@@ -2,7 +2,7 @@ import {
   getData,
   getWeatherData,
   getUnitString,
-} from "./lib/weatherDataService.js";
+} from "../lib/weatherDataService.js";
 
 const ctx = document.querySelector("#chart");
 var chart;

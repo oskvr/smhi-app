@@ -4,8 +4,8 @@ import {
   getWeatherData,
   filterByDates,
   getMinDate,
-} from "./lib/weatherDataService.js";
-import { on } from "./helpers.js";
+} from "../lib/weatherDataService.js";
+import { on } from "../lib/helpers.js";
 import { initChart } from "./dataChart.js";
 const infoContainer = document.querySelector(".date-filter__info");
 const startDate = document.querySelector("#startDate");

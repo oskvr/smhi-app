@@ -1,5 +1,5 @@
 :root {
-  --c-primary-lightest: #dceefb;
+  --c-primary-lightest: #e5f3fd;
   --c-primary-light: #b6e0fe;
   --c-primary: #0f609b;
   --c-primary-dark: #0a558c;
@@ -248,7 +248,7 @@ tbody tr:nth-child(even) {
 }
 .pill-yellow {
   background: rgb(247, 244, 168);
-  color: rgb(104, 110, 15);
+  color: rgb(82, 87, 20);
 }
 .pill-green {
   background: var(--c-green-light);
@@ -354,12 +354,6 @@ tbody tr:nth-child(even) {
   .station-search__toggle {
     display: none;
   }
-  .pagination__count label {
-    display: none;
-  }
-  .btn-paginate__number:not(.btn-paginate__number.active) {
-    display: none;
-  }
   .data-info__header_title h1 {
     font-size: 1.8em;
   }
@@ -367,16 +361,15 @@ tbody tr:nth-child(even) {
     font-size: 1.2em;
     font-weight: 400;
   }
+  .chart-wrapper {
+    display: none;
+  }
 }
 
 /* Tablets */
 @media only screen and (max-width: 481px) {
   main {
     padding: 0;
-  }
-  .pagination {
-    flex-direction: column;
-    gap: 1rem;
   }
   .date-filter {
     flex-direction: column;
@@ -386,6 +379,9 @@ tbody tr:nth-child(even) {
   }
   .container {
     max-width: 100px;
+  }
+  .btn-paginate__number:not(.btn-paginate__number.active) {
+    display: none;
   }
 }
 /* Laptops */
@@ -404,6 +400,10 @@ tbody tr:nth-child(even) {
   }
   .date-filter {
     width: 100%;
+  }
+  .pagination {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 @media only screen and (max-width: 996px) {

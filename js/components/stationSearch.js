@@ -1,5 +1,5 @@
-import { on } from "./helpers.js";
-import { getActiveStations, setStation } from "./lib/stationService.js";
+import { on } from "../lib/helpers.js";
+import { getActiveStations, setStation } from "../lib/stationService.js";
 const results = document.querySelector(".results");
 const input = document.querySelector("#stationSearchInput");
 const toggleBtn = document.querySelector("#stationSearchToggle");

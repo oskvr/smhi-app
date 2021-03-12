@@ -3,8 +3,8 @@ import {
   currentPage,
   totalResults,
   setResultsLength,
-} from "../pagination.js";
-import { isFilteredByDate } from "../dateFilter.js";
+} from "../components/pagination.js";
+import { isFilteredByDate } from "../components/dateFilter.js";
 let weatherData = [];
 let filteredWeatherData = [];
 export async function fetchWeatherDataAsync(stationId) {
