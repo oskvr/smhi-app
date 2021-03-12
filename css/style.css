@@ -46,7 +46,7 @@ td {
   padding: 1rem 2rem;
 }
 tbody tr:nth-child(even) {
-  background: rgb(250, 250, 255);
+  background: rgb(252, 252, 255);
 }
 
 /*----------  SORTABLE TABLE HEADERS  ----------*/
@@ -321,9 +321,9 @@ tbody tr:nth-child(even) {
 /*----------  DATE FILTER  ----------*/
 .date-filter {
   display: flex;
-  flex-wrap: wrap;
+
   gap: 0.3rem;
-  width: 55%;
+  width: 50%;
 }
 .date-filter__input {
   width: 40%;
