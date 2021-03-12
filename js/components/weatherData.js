@@ -38,7 +38,13 @@ function renderTableBody() {
           {
             from: new Date(value).toLocaleString(),
             to: new Date(value).toLocaleString(),
-            date: new Date(value).toLocaleString(),
+            date: new Date(value).toLocaleString("sv-SE", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
             value: `<span>${value}</span> ${getUnitString()}`,
             quality:
               value === "G"

@@ -20,8 +20,8 @@ export function initChart() {
         {
           label: `${getData().parameter.name} (${getUnitString()})`,
           data: getWeatherData().map((data) => data.value),
-          backgroundColor: "pink",
-          borderColor: "red",
+          backgroundColor: "#FACDCD",
+          borderColor: "#BA2525",
           borderWidth: 1,
         },
       ],
